@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { stomachPaths, arteryPaths, veinPaths } from './AnatomicalPaths';
 
 const stages = [
-  { id: 1, time: '0 – 5 min',      title: 'Dissolution',  subtitle: 'Capsule breaks down in stomach',       detail: 'The vegetable cellulose capsule dissolves in stomach acid, releasing a precise 600mg dose of KSM-66® withanolides alongside 5mg of piperine from Black Pepper extract.', color: '#9DB2C9', region: 'stomach' },
-  { id: 2, time: '5 – 30 min',     title: 'Absorption',   subtitle: 'Piperine unlocks bioavailability',     detail: 'Piperine temporarily inhibits digestive enzymes that would otherwise metabolize withanolides prematurely, boosting absorption into the intestinal wall by up to 30%.', color: '#1B365D', region: 'gut' },
-  { id: 3, time: '30 – 90 min',    title: 'Circulation',  subtitle: 'Active compounds enter bloodstream',   detail: 'Withanolides are transported through the portal vein into systemic circulation, carried by plasma proteins to target tissues including the adrenal glands and brain.', color: '#5A7FA8', region: 'blood' },
-  { id: 4, time: '90 min → ongoing', title: 'Regulation', subtitle: 'HPA axis modulation begins',          detail: 'Withanolides modulate the HPA axis, signaling the adrenal cortex to reduce cortisol secretion. Simultaneously, GABA-ergic pathways in the brain are activated, promoting calm alertness.', color: '#2E5B88', region: 'brain' },
+  { id: 1, time: '0 – 5 min',      title: 'Dissolution',  subtitle: 'Capsule breaks down in stomach',       detail: 'The vegetable cellulose capsule dissolves in stomach acid, releasing a precise 600mg dose of KSM-66® withanolides alongside 5mg of piperine from Black Pepper extract.', color: '#A9C2E3', region: 'stomach' },
+  { id: 2, time: '5 – 30 min',     title: 'Absorption',   subtitle: 'Piperine unlocks bioavailability',     detail: 'Piperine temporarily inhibits digestive enzymes that would otherwise metabolize withanolides prematurely, boosting absorption into the intestinal wall by up to 30%.', color: '#8FB3FF', region: 'gut' },
+  { id: 3, time: '30 – 90 min',    title: 'Circulation',  subtitle: 'Active compounds enter bloodstream',   detail: 'Withanolides are transported through the portal vein into systemic circulation, carried by plasma proteins to target tissues including the adrenal glands and brain.', color: '#A3C2F0', region: 'blood' },
+  { id: 4, time: '90 min → ongoing', title: 'Regulation', subtitle: 'HPA axis modulation begins',          detail: 'Withanolides modulate the HPA axis, signaling the adrenal cortex to reduce cortisol secretion. Simultaneously, GABA-ergic pathways in the brain are activated, promoting calm alertness.', color: '#FFE296', region: 'brain' },
 ];
 
 // ─────────────────────────────────────────────────────────────────
@@ -564,7 +564,7 @@ export const PillJourney: React.FC = () => {
           <h2 className="heading-condensed text-4xl md:text-5xl text-white tracking-wide">
             inside one capsule
           </h2>
-          <h3 className="heading-condensed text-2xl md:text-3xl text-[var(--color-navy)] tracking-wide -mt-2">
+          <h3 className="heading-condensed text-2xl md:text-3xl text-[#8FB3FF] tracking-wide -mt-2">
             four stages of action
           </h3>
           <p className="font-sans text-xs md:text-sm text-white/50 font-light max-w-sm leading-relaxed">
