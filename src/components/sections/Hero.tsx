@@ -116,7 +116,7 @@ export const Hero: React.FC = () => {
 
             {/* Video Play link */}
             <a 
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+              href="https://www.youtube.com/" 
               target="_blank" 
               rel="noreferrer"
               className="flex items-center justify-center gap-3.5 group cursor-pointer focus:outline-none"
