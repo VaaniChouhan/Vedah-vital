@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { stomachPaths, arteryPaths, veinPaths } from './AnatomicalPaths';
 
 const stages = [
   { id: 1, time: '0 – 5 min',      title: 'Dissolution',  subtitle: 'Capsule breaks down in stomach',       detail: 'The vegetable cellulose capsule dissolves in stomach acid, releasing a precise 600mg dose of KSM-66® withanolides alongside 5mg of piperine from Black Pepper extract.', color: '#9DB2C9', region: 'stomach' },
@@ -15,52 +16,11 @@ const stages = [
 // DYNAMIC REALISTIC HUMAN INFOGRAPHIC
 // ─────────────────────────────────────────────────────────────────
 const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStage }) => {
-  const [svgContent, setSvgContent] = useState<string>('');
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/images/human1.svg')
-      .then(res => res.text())
-      .then(data => {
-        if (typeof window !== 'undefined') {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(data, 'image/svg+xml');
-          
-          // Add semantic classes once to elements based on original attributes
-          doc.querySelectorAll('[fill="#F4AAA3"]').forEach(el => el.classList.add('svg-stomach'));
-          
-          const redFills = ["#E12349", "#951F32", "#B82740", "#A54C4B", "#6F1110", "#B05052"];
-          redFills.forEach(color => {
-            doc.querySelectorAll(`[fill="${color}"]`).forEach(el => el.classList.add('svg-arteries'));
-          });
-          
-          const blueFills = ["#00A5DA", "#00457B", "#00367D", "#0099D3"];
-          blueFills.forEach(color => {
-            doc.querySelectorAll(`[fill="${color}"]`).forEach(el => el.classList.add('svg-veins'));
-          });
-          
-          doc.querySelectorAll('[stroke="#5A7FA8"], [stroke="#3A644E"]').forEach(el => el.classList.add('svg-silhouette-stroke'));
-          doc.querySelectorAll('[fill="#5A7FA8"], [fill="#3A644E"]').forEach(el => el.classList.add('svg-silhouette-fill'));
-          
-          const serializer = new XMLSerializer();
-          const cleanSvg = serializer.serializeToString(doc.documentElement);
-          setSvgContent(cleanSvg);
-        } else {
-          setSvgContent(data);
-        }
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('Failed to load human1 SVG:', err);
-        setLoading(false);
-      });
-  }, []);
-
   const stageClass = `stage-${activeStage + 1}`;
 
   return (
     <div className={`relative w-full aspect-[136/359] ${stageClass} overflow-hidden`}>
-      {/* Component-level CSS overrides for human1.svg paths & smooth zoom effects */}
+      {/* Component-level CSS overrides for smooth zoom effects */}
       <style>{`
         .human-body-svg-container {
           width: 100%;
@@ -103,85 +63,69 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStag
           transform: scale(1.4) translate(0%, 19.61%);
         }
 
-        /* -------------------------------------------------------------
-           SVG INTERNAL SHAPE HIGHLIGHT OVERRIDES BY ACTIVE STAGE
-        ------------------------------------------------------------- */
-
-        .human-bg-rect {
-          display: none !important;
-        }
-
-        /* Base silhouette stroke & fill overrides */
-        .svg-silhouette-stroke {
-          stroke: rgba(255, 255, 255, 0.08) !important;
-          stroke-width: 0.35px !important;
-        }
-
-        .svg-silhouette-fill {
-          fill: rgba(255, 255, 255, 0.04) !important;
-        }
-
-        /* Hide default red/blue cardiovascular paths & stomach by default */
-        .svg-arteries,
-        .svg-veins,
-        .svg-stomach {
-          opacity: 0.04;
-          transition: opacity 0.8s ease, fill 0.8s ease, stroke 0.8s ease;
-        }
-
-        /* Stage 1 Highlight: Stomach */
-        .stage-1 .svg-stomach {
-          fill: #8FB3FF !important;
-          opacity: 0.95 !important;
-          filter: drop-shadow(0 0 5px #8FB3FFcc);
-        }
-
-        /* Stage 2 Highlight: Small Intestine (enhanced visibility of body outline) */
-        .stage-2 .svg-silhouette-fill {
-          fill: rgba(255, 255, 255, 0.06) !important;
-        }
-
-        /* Stage 3 Highlight: Blood vessels & heart */
-        .stage-3 .svg-arteries {
-          fill: #8FB3FF !important;
-          opacity: 0.95 !important;
-          filter: drop-shadow(0 0 4px #8FB3FFcc);
-          animation: pulse-circ 1.5s infinite alternate ease-in-out;
-        }
-
-        .stage-3 .svg-veins {
-          fill: rgba(255, 255, 255, 0.45) !important;
-          opacity: 0.75 !important;
-        }
-
-        /* Stage 4 Highlight: Brain & nervous system (glowing brand navy) */
-        .stage-4 .svg-silhouette-stroke {
-          stroke: #8FB3FF !important;
-          stroke-opacity: 0.65 !important;
-          filter: drop-shadow(0 0 2px #8FB3FF55);
-        }
-
         @keyframes pulse-circ {
           0% { opacity: 0.4; }
           100% { opacity: 0.95; }
         }
       `}</style>
 
-      {loading ? (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
-          <div className="w-8 h-8 rounded-full border-2 border-t-white border-white/20 animate-spin" />
-          <span className="font-sans text-[9px] text-white/35 tracking-wider uppercase">Loading Infographic</span>
-        </div>
-      ) : (
-        <div className="human-body-svg-container">
-          {/* Main Anatomical Silhouette */}
-          <div 
-            className="human-body-svg-inner w-full h-full"
-            dangerouslySetInnerHTML={{ __html: svgContent }}
-          />
+      <div className="human-body-svg-container">
+        {/* Static Background Silhouette Image -composited on GPU */}
+        <img 
+          src="/images/human_silhouette.svg" 
+          className="absolute inset-0 w-full h-full select-none pointer-events-none transition-all duration-800"
+          style={{
+            opacity: activeStage === 1 ? 0.95 : 0.8,
+            filter: activeStage === 3 ? 'drop-shadow(0 0 3px #8FB3FF44) brightness(1.2)' : 'brightness(1.0)'
+          }}
+          alt="Anatomical body outline"
+        />
 
-          {/* Interactive Animations Overlay SVG (Matches coordinate space 1:1) */}
-          <svg viewBox="0 0 136 359" className="absolute inset-0 w-full h-full pointer-events-none z-20">
+        {/* Interactive Animations Overlay SVG (Matches coordinate space 1:1) */}
+        <svg viewBox="0 0 136 359" className="absolute inset-0 w-full h-full pointer-events-none z-20">
+          {/* Static anatomical highlight paths rendered inline for high performance */}
+          
+          {/* Stomach highlight (Stage 1) */}
+          {stomachPaths.map((d, i) => (
+            <path
+              key={`stomach-${i}`}
+              d={d}
+              className="transition-all duration-800"
+              style={{
+                fill: activeStage === 0 ? '#8FB3FF' : '#F4AAA3',
+                opacity: activeStage === 0 ? 0.95 : 0.04,
+                filter: activeStage === 0 ? 'drop-shadow(0 0 5px #8FB3FFcc)' : 'none'
+              }}
+            />
+          ))}
+
+          {/* Arteries highlight (Stage 3) */}
+          {arteryPaths.map((d, i) => (
+            <path
+              key={`artery-${i}`}
+              d={d}
+              className="transition-all duration-800"
+              style={{
+                fill: '#8FB3FF',
+                opacity: activeStage === 2 ? 0.95 : 0.04,
+                filter: activeStage === 2 ? 'drop-shadow(0 0 4px #8FB3FFcc)' : 'none',
+                animation: activeStage === 2 ? 'pulse-circ 1.5s infinite alternate ease-in-out' : 'none'
+              }}
+            />
+          ))}
+
+          {/* Veins highlight (Stage 3) */}
+          {veinPaths.map((d, i) => (
+            <path
+              key={`vein-${i}`}
+              d={d}
+              className="transition-all duration-800"
+              style={{
+                fill: activeStage === 2 ? 'rgba(255, 255, 255, 0.45)' : '#00A5DA',
+                opacity: activeStage === 2 ? 0.75 : 0.04
+              }}
+            />
+          ))}
             {/* Stage 1: Dissolution (Esophagus travel, splitting capsule, releasing active ingredient cloud) */}
             {activeStage === 0 && (
               <>
@@ -566,10 +510,9 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStag
             )}
           </svg>
         </div>
-      )}
-    </div>
-  );
-};
+      </div>
+    );
+  };
 
 // ─────────────────────────────────────────────────────────────────
 // MAIN SECTION COMPONENT
