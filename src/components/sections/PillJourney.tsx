@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { stomachPaths, arteryPaths, veinPaths } from './AnatomicalPaths';
 
 const stages = [
   { id: 1, time: '0 – 5 min',      title: 'Dissolution',  subtitle: 'Capsule breaks down in stomach',       detail: 'The vegetable cellulose capsule dissolves in stomach acid, releasing a precise 600mg dose of KSM-66® withanolides alongside 5mg of piperine from Black Pepper extract.', color: '#A9C2E3', region: 'stomach' },
@@ -20,7 +19,7 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStag
 
   return (
     <div className={`relative w-full aspect-[136/359] ${stageClass} overflow-hidden`}>
-      {/* Component-level CSS overrides for smooth zoom effects */}
+      {/* Component-level CSS overrides for smooth zoom effects with WebKit GPU layers */}
       <style>{`
         .human-body-svg-container {
           width: 100%;
@@ -29,13 +28,19 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStag
           transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
           transform-origin: 50% 25%;
           will-change: transform;
-          transform: translateZ(0);
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
 
+        .human-body-svg-container img,
         .human-body-svg-container svg {
-          width: 100%;
-          height: 100%;
-          display: block;
+          will-change: transform;
+          transform: translate3d(0, 0, 0);
+          -webkit-transform: translate3d(0, 0, 0);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
         }
 
         /* -------------------------------------------------------------
@@ -70,7 +75,7 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStag
       `}</style>
 
       <div className="human-body-svg-container">
-        {/* Static Background Silhouette Image -composited on GPU */}
+        {/* Static Background Silhouette Image - composited entirely on GPU */}
         <img 
           src="/images/human_silhouette.svg" 
           className="absolute inset-0 w-full h-full select-none pointer-events-none transition-all duration-800"
@@ -83,49 +88,19 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStag
 
         {/* Interactive Animations Overlay SVG (Matches coordinate space 1:1) */}
         <svg viewBox="0 0 136 359" className="absolute inset-0 w-full h-full pointer-events-none z-20">
-          {/* Static anatomical highlight paths rendered inline for high performance */}
-          
-          {/* Stomach highlight (Stage 1) */}
-          {stomachPaths.map((d, i) => (
-            <path
-              key={`stomach-${i}`}
-              d={d}
-              className="transition-all duration-800"
-              style={{
-                fill: activeStage === 0 ? '#8FB3FF' : '#F4AAA3',
-                opacity: activeStage === 0 ? 0.95 : 0.04,
-                filter: activeStage === 0 ? 'drop-shadow(0 0 5px #8FB3FFcc)' : 'none'
-              }}
-            />
-          ))}
-
-          {/* Arteries highlight (Stage 3) */}
-          {arteryPaths.map((d, i) => (
-            <path
-              key={`artery-${i}`}
-              d={d}
-              className="transition-all duration-800"
-              style={{
-                fill: '#8FB3FF',
-                opacity: activeStage === 2 ? 0.95 : 0.04,
-                filter: activeStage === 2 ? 'drop-shadow(0 0 4px #8FB3FFcc)' : 'none',
-                animation: activeStage === 2 ? 'pulse-circ 1.5s infinite alternate ease-in-out' : 'none'
-              }}
-            />
-          ))}
-
-          {/* Veins highlight (Stage 3) */}
-          {veinPaths.map((d, i) => (
-            <path
-              key={`vein-${i}`}
-              d={d}
-              className="transition-all duration-800"
-              style={{
-                fill: activeStage === 2 ? 'rgba(255, 255, 255, 0.45)' : '#00A5DA',
-                opacity: activeStage === 2 ? 0.75 : 0.04
-              }}
-            />
-          ))}
+          {/* Static gastric cavity glow indicator rendered inline for high performance */}
+          <motion.ellipse
+            cx="68"
+            cy="98"
+            rx="13"
+            ry="10"
+            className="transition-all duration-800"
+            style={{
+              fill: activeStage === 0 ? '#8FB3FF' : '#F4AAA3',
+              opacity: activeStage === 0 ? 0.95 : 0.04,
+              filter: activeStage === 0 ? 'drop-shadow(0 0 6px #8FB3FFcc)' : 'none'
+            }}
+          />
             {/* Stage 1: Dissolution (Esophagus travel, splitting capsule, releasing active ingredient cloud) */}
             {activeStage === 0 && (
               <>
