@@ -14,7 +14,7 @@ const stages = [
 // ─────────────────────────────────────────────────────────────────
 // DYNAMIC REALISTIC HUMAN INFOGRAPHIC
 // ─────────────────────────────────────────────────────────────────
-const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: string }> = ({ activeStage, stageColor }) => {
+const DynamicHumanInfographic: React.FC<{ activeStage: number }> = ({ activeStage }) => {
   const [svgContent, setSvgContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
 
@@ -22,8 +22,32 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: strin
     fetch('/images/human1.svg')
       .then(res => res.text())
       .then(data => {
-        const cleanSvg = data.replace(/<\?xml[^>]*\?>/i, '');
-        setSvgContent(cleanSvg);
+        if (typeof window !== 'undefined') {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(data, 'image/svg+xml');
+          
+          // Add semantic classes once to elements based on original attributes
+          doc.querySelectorAll('[fill="#F4AAA3"]').forEach(el => el.classList.add('svg-stomach'));
+          
+          const redFills = ["#E12349", "#951F32", "#B82740", "#A54C4B", "#6F1110", "#B05052"];
+          redFills.forEach(color => {
+            doc.querySelectorAll(`[fill="${color}"]`).forEach(el => el.classList.add('svg-arteries'));
+          });
+          
+          const blueFills = ["#00A5DA", "#00457B", "#00367D", "#0099D3"];
+          blueFills.forEach(color => {
+            doc.querySelectorAll(`[fill="${color}"]`).forEach(el => el.classList.add('svg-veins'));
+          });
+          
+          doc.querySelectorAll('[stroke="#5A7FA8"], [stroke="#3A644E"]').forEach(el => el.classList.add('svg-silhouette-stroke'));
+          doc.querySelectorAll('[fill="#5A7FA8"], [fill="#3A644E"]').forEach(el => el.classList.add('svg-silhouette-fill'));
+          
+          const serializer = new XMLSerializer();
+          const cleanSvg = serializer.serializeToString(doc.documentElement);
+          setSvgContent(cleanSvg);
+        } else {
+          setSvgContent(data);
+        }
         setLoading(false);
       })
       .catch(err => {
@@ -43,7 +67,9 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: strin
           height: 100%;
           position: relative;
           transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-          transform-origin: center center;
+          transform-origin: 50% 25%;
+          will-change: transform;
+          transform: translateZ(0);
         }
 
         .human-body-svg-container svg {
@@ -54,30 +80,27 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: strin
 
         /* -------------------------------------------------------------
            DYNAMIC DGN WINDOW SCANNER SCALING & PANNING (STAGE ZOOM)
+           Fixed origin 50% 25% prevents layout recalculation reflows.
         ------------------------------------------------------------- */
         
         /* Stage 1: Dissolution (Zoom to Stomach region) */
         .stage-1 .human-body-svg-container {
-          transform: scale(2.2) translate(0.05%, -1.88%);
-          transform-origin: 49.89% 29.40%;
+          transform: scale(2.2) translate(0.11%, -4.28%);
         }
 
         /* Stage 2: Absorption (Zoom to Intestines region) */
         .stage-2 .human-body-svg-container {
-          transform: scale(2.4) translate(0.00%, -6.89%);
-          transform-origin: 50.00% 41.78%;
+          transform: scale(2.4) translate(0%, -16.68%);
         }
 
         /* Stage 3: Circulation (Zoom to Chest/Vessels region) */
         .stage-3 .human-body-svg-container {
-          transform: scale(1.6) translate(0.00%, 0.12%);
-          transform-origin: 50.00% 25.07%;
+          transform: scale(1.6) translate(0%, 0.09%);
         }
 
         /* Stage 4: Regulation (Zoom to HPA Axis Brain/Endocrine region) */
         .stage-4 .human-body-svg-container {
-          transform: scale(1.4) translate(0.00%, 14.06%);
-          transform-origin: 50.00% 5.57%;
+          transform: scale(1.4) translate(0%, 19.61%);
         }
 
         /* -------------------------------------------------------------
@@ -88,69 +111,51 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: strin
           display: none !important;
         }
 
-        /* Base silhouette stroke & fill overrides using XML attributes */
-        .human-body-svg-container svg path[stroke="#3A644E"] {
+        /* Base silhouette stroke & fill overrides */
+        .svg-silhouette-stroke {
           stroke: rgba(255, 255, 255, 0.08) !important;
           stroke-width: 0.35px !important;
-          transition: all 0.8s ease;
         }
 
-        .human-body-svg-container svg path[fill="#3A644E"] {
+        .svg-silhouette-fill {
           fill: rgba(255, 255, 255, 0.04) !important;
-          transition: all 0.8s ease;
         }
 
-        /* Hide default red/blue cardiovascular paths by default */
-        .human-body-svg-container svg path[fill="#E12349"],
-        .human-body-svg-container svg path[fill="#951F32"],
-        .human-body-svg-container svg path[fill="#B82740"],
-        .human-body-svg-container svg path[fill="#A54C4B"],
-        .human-body-svg-container svg path[fill="#6F1110"],
-        .human-body-svg-container svg path[fill="#B05052"],
-        .human-body-svg-container svg path[fill="#00A5DA"],
-        .human-body-svg-container svg path[fill="#00457B"],
-        .human-body-svg-container svg path[fill="#00367D"],
-        .human-body-svg-container svg path[fill="#0099D3"],
-        .human-body-svg-container svg path[fill="#F4AAA3"] {
+        /* Hide default red/blue cardiovascular paths & stomach by default */
+        .svg-arteries,
+        .svg-veins,
+        .svg-stomach {
           opacity: 0.04;
-          transition: all 0.8s ease;
+          transition: opacity 0.8s ease, fill 0.8s ease, stroke 0.8s ease;
         }
 
         /* Stage 1 Highlight: Stomach */
-        .stage-1 .human-body-svg-container svg path[fill="#F4AAA3"] {
+        .stage-1 .svg-stomach {
           fill: #8FB3FF !important;
           opacity: 0.95 !important;
           filter: drop-shadow(0 0 5px #8FB3FFcc);
         }
 
         /* Stage 2 Highlight: Small Intestine (enhanced visibility of body outline) */
-        .stage-2 .human-body-svg-container svg path[fill="#3A644E"] {
-          fill: rgba(255, 255, 255, 0.08) !important;
+        .stage-2 .svg-silhouette-fill {
+          fill: rgba(255, 255, 255, 0.06) !important;
         }
 
         /* Stage 3 Highlight: Blood vessels & heart */
-        .stage-3 .human-body-svg-container svg path[fill="#E12349"],
-        .stage-3 .human-body-svg-container svg path[fill="#951F32"],
-        .stage-3 .human-body-svg-container svg path[fill="#B82740"],
-        .stage-3 .human-body-svg-container svg path[fill="#A54C4B"],
-        .stage-3 .human-body-svg-container svg path[fill="#6F1110"],
-        .stage-3 .human-body-svg-container svg path[fill="#B05052"] {
+        .stage-3 .svg-arteries {
           fill: #8FB3FF !important;
           opacity: 0.95 !important;
           filter: drop-shadow(0 0 4px #8FB3FFcc);
           animation: pulse-circ 1.5s infinite alternate ease-in-out;
         }
 
-        .stage-3 .human-body-svg-container svg path[fill="#00A5DA"],
-        .stage-3 .human-body-svg-container svg path[fill="#00457B"],
-        .stage-3 .human-body-svg-container svg path[fill="#00367D"],
-        .stage-3 .human-body-svg-container svg path[fill="#0099D3"] {
+        .stage-3 .svg-veins {
           fill: rgba(255, 255, 255, 0.45) !important;
           opacity: 0.75 !important;
         }
 
         /* Stage 4 Highlight: Brain & nervous system (glowing brand navy) */
-        .stage-4 .human-body-svg-container svg path[stroke="#3A644E"] {
+        .stage-4 .svg-silhouette-stroke {
           stroke: #8FB3FF !important;
           stroke-opacity: 0.65 !important;
           filter: drop-shadow(0 0 2px #8FB3FF55);
@@ -177,77 +182,170 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: strin
 
           {/* Interactive Animations Overlay SVG (Matches coordinate space 1:1) */}
           <svg viewBox="0 0 136 359" className="absolute inset-0 w-full h-full pointer-events-none z-20">
-            {/* Stage 1: Dissolution (Capsule travel & stomach dissolve) */}
+            {/* Stage 1: Dissolution (Esophagus travel, splitting capsule, releasing active ingredient cloud) */}
             {activeStage === 0 && (
               <>
+                {/* Capsule group traveling down the esophagus */}
                 <motion.g
                   animate={{
-                    y: [25, 95],
+                    y: [15, 80, 80, 80],
                     opacity: [0, 1, 1, 0]
                   }}
                   transition={{
-                    duration: 2.2,
+                    duration: 4.0,
                     repeat: Infinity,
-                    ease: 'easeInOut'
+                    ease: 'easeInOut',
+                    times: [0, 0.35, 0.55, 1.0]
                   }}
                 >
-                  <rect x="65" y="5" width="6" height="10" rx="3" fill={stageColor} stroke="white" strokeWidth="0.6"/>
-                  <line x1="68" y1="5" x2="68" y2="15" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6"/>
+                  {/* Capsule Cap (Navy Blue) */}
+                  <motion.rect
+                    x="65"
+                    y="0"
+                    width="6"
+                    height="5"
+                    rx="3"
+                    fill="#1B365D"
+                    stroke="rgba(255, 255, 255, 0.4)"
+                    strokeWidth="0.4"
+                    animate={{
+                      y: [0, 0, -5, -5],
+                      x: [0, 0, -4, -4],
+                      rotate: [0, 0, -60, -60],
+                      opacity: [1, 1, 0, 0]
+                    }}
+                    transition={{
+                      duration: 4.0,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      times: [0, 0.35, 0.55, 1.0]
+                    }}
+                  />
+                  {/* Capsule Body (Gold) */}
+                  <motion.rect
+                    x="65"
+                    y="5"
+                    width="6"
+                    height="5"
+                    rx="3"
+                    fill="#ffe296"
+                    stroke="rgba(255, 255, 255, 0.4)"
+                    strokeWidth="0.4"
+                    animate={{
+                      y: [0, 0, 5, 5],
+                      x: [0, 0, 4, 4],
+                      rotate: [0, 0, 45, 45],
+                      opacity: [1, 1, 0, 0]
+                    }}
+                    transition={{
+                      duration: 4.0,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      times: [0, 0.35, 0.55, 1.0]
+                    }}
+                  />
+                  {/* Esophagus trail lines */}
+                  <line x1="68" y1="0" x2="68" y2="10" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" strokeDasharray="1,2" />
                 </motion.g>
-                <motion.circle
-                  cx="68"
-                  cy="105"
-                  r="12"
-                  fill={`${stageColor}22`}
-                  animate={{ scale: [1, 1.25, 1], opacity: [0.2, 0.6, 0.2] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-                />
-                <motion.circle
-                  cx="68"
-                  cy="105"
-                  r="6"
-                  fill={`${stageColor}66`}
-                  animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.9, 0.4] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
-                />
-              </>
-            )}
 
-            {/* Stage 2: Absorption (Intestine diffusion particles) */}
-            {activeStage === 1 && (
-              <>
-                <motion.ellipse
+                {/* Stomach cavity warm glowing background pulse */}
+                <motion.circle
                   cx="68"
-                  cy="147.5"
-                  rx="15"
-                  ry="12"
-                  fill={`${stageColor}15`}
-                  animate={{ opacity: [0.4, 0.7, 0.4], scale: [1, 1.08, 1] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+                  cy="98"
+                  r="14"
+                  fill="rgba(143, 179, 255, 0.12)"
+                  animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeInOut' }}
                 />
+
+                {/* Dissolving active ingredient particle burst */}
                 {[
-                  { x: 68, y: 136, delay: 0.0 },
-                  { x: 65, y: 140, delay: 0.3 },
-                  { x: 71, y: 144, delay: 0.6 },
-                  { x: 67, y: 148, delay: 0.9 },
-                  { x: 72, y: 152, delay: 1.2 },
-                  { x: 64, y: 156, delay: 1.5 },
-                  { x: 69, y: 159, delay: 0.2 },
-                  { x: 66, y: 142, delay: 0.5 },
-                  { x: 70, y: 150, delay: 0.8 },
-                  { x: 68, y: 155, delay: 1.1 }
+                  { dx: -8, dy: -6, delay: 1.3 },
+                  { dx: 8, dy: -6, delay: 1.4 },
+                  { dx: -12, dy: 5, delay: 1.5 },
+                  { dx: 12, dy: 5, delay: 1.6 },
+                  { dx: -4, dy: 12, delay: 1.4 },
+                  { dx: 4, dy: 12, delay: 1.5 },
+                  { dx: -9, dy: -1, delay: 1.3 },
+                  { dx: 9, dy: -1, delay: 1.5 },
+                  { dx: -2, dy: 7, delay: 1.6 },
+                  { dx: 2, dy: 7, delay: 1.4 },
+                  { dx: -7, dy: 10, delay: 1.5 },
+                  { dx: 7, dy: 10, delay: 1.7 }
                 ].map((p, i) => (
                   <motion.circle
                     key={i}
-                    cx={p.x}
-                    cy={p.y}
-                    r="1.4"
+                    cx="68"
+                    cy="95"
+                    r="1.2"
+                    fill="#ffe296"
+                    animate={{
+                      x: [0, p.dx],
+                      y: [0, p.dy],
+                      scale: [0, 1.4, 0],
+                      opacity: [0, 0.95, 0]
+                    }}
+                    transition={{
+                      duration: 1.8,
+                      repeat: Infinity,
+                      delay: p.delay,
+                      ease: 'easeOut'
+                    }}
+                  />
+                ))}
+              </>
+            )}
+
+            {/* Stage 2: Absorption (Intestinal flow & blood vessel diffusion) */}
+            {activeStage === 1 && (
+              <>
+                {/* Intestinal Loop path flow */}
+                <path
+                  d="M68,110 C62,118 74,124 68,132 C60,138 76,144 68,152 C60,158 76,164 68,170 C62,176 74,180 68,186"
+                  fill="none"
+                  stroke="rgba(143, 179, 255, 0.08)"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+                
+                {/* Flowing nutrients along the gut loop */}
+                <motion.path
+                  d="M68,110 C62,118 74,124 68,132 C60,138 76,144 68,152 C60,158 76,164 68,170 C62,176 74,180 68,186"
+                  fill="none"
+                  stroke="#8FB3FF"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeDasharray="3, 15"
+                  animate={{ strokeDashoffset: [0, 18] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: 'linear' }}
+                />
+
+                {/* Diffusion particles (nutrients leaving gut loops and entering bloodstream) */}
+                {[
+                  { cy: 120, xStart: 66, xEnd: 52, delay: 0.0 },
+                  { cy: 125, xStart: 70, xEnd: 84, delay: 0.4 },
+                  { cy: 135, xStart: 65, xEnd: 50, delay: 0.8 },
+                  { cy: 140, xStart: 71, xEnd: 86, delay: 0.2 },
+                  { cy: 150, xStart: 66, xEnd: 48, delay: 0.6 },
+                  { cy: 155, xStart: 70, xEnd: 88, delay: 1.0 },
+                  { cy: 165, xStart: 65, xEnd: 50, delay: 1.4 },
+                  { cy: 170, xStart: 71, xEnd: 86, delay: 0.5 },
+                  { cy: 130, xStart: 68, xEnd: 53, delay: 1.2 },
+                  { cy: 145, xStart: 68, xEnd: 83, delay: 1.6 },
+                  { cy: 160, xStart: 68, xEnd: 52, delay: 0.9 },
+                  { cy: 175, xStart: 68, xEnd: 84, delay: 1.3 }
+                ].map((p, i) => (
+                  <motion.circle
+                    key={i}
+                    cx={p.xStart}
+                    cy={p.cy}
+                    r="1.3"
                     fill="#8FB3FF"
                     animate={{
-                      x: [p.x, p.x + (p.x < 68 ? -7 : 7)],
-                      y: [p.y, p.y + 6],
-                      opacity: [0, 0.9, 0],
-                      scale: [0.6, 1.2, 0.6]
+                      cx: [p.xStart, p.xEnd],
+                      cy: [p.cy, p.cy + 10],
+                      scale: [0.6, 1.3, 0.4],
+                      opacity: [0, 0.9, 0]
                     }}
                     transition={{
                       duration: 2.0,
@@ -260,186 +358,209 @@ const DynamicHumanInfographic: React.FC<{ activeStage: number; stageColor: strin
               </>
             )}
 
-            {/* Stage 3: Circulation (Blood vessel flow pulses) */}
+            {/* Stage 3: Circulation (Double heartbeat pulse, vascular flow loops) */}
             {activeStage === 2 && (
               <>
-                {/* Heart Center Pulse */}
+                {/* Heart Center Double-Beat (lub-dub) Pulse */}
                 <motion.circle
                   cx="68"
                   cy="88"
-                  r="6"
-                  fill={`${stageColor}33`}
-                  animate={{ scale: [1, 1.25, 1], opacity: [0.4, 0.8, 0.4] }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                  r="5"
+                  fill="#8FB3FF"
+                  animate={{
+                    scale: [1, 1.35, 1.15, 1.45, 1]
+                  }}
+                  transition={{
+                    duration: 1.4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    times: [0, 0.15, 0.3, 0.45, 1]
+                  }}
                 />
                 <motion.circle
                   cx="68"
                   cy="88"
-                  r="3"
-                  fill={`${stageColor}88`}
-                  animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.9, 0.5] }}
-                  transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
+                  r="10"
+                  fill="none"
+                  stroke="rgba(143, 179, 255, 0.3)"
+                  strokeWidth="0.6"
+                  animate={{
+                    scale: [1, 1.45, 1.2, 1.6, 1],
+                    opacity: [0.3, 0.75, 0.5, 0.85, 0.3]
+                  }}
+                  transition={{
+                    duration: 1.4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    times: [0, 0.15, 0.3, 0.45, 1]
+                  }}
                 />
                 
-                {/* Downward Pulse Left */}
-                <motion.circle
-                  cx={68}
-                  cy={88}
-                  r="1.8"
-                  fill="#8FB3FF"
-                  animate={{
-                    cx: [68, 66, 62],
-                    cy: [88, 115, 145],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 2.0,
-                    repeat: Infinity,
-                    ease: 'easeInOut'
-                  }}
-                />
-                {/* Downward Pulse Right */}
-                <motion.circle
-                  cx={68}
-                  cy={88}
-                  r="1.8"
-                  fill="#8FB3FF"
-                  animate={{
-                    cx: [68, 70, 74],
-                    cy: [88, 115, 145],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 2.0,
-                    repeat: Infinity,
-                    delay: 1.0,
-                    ease: 'easeInOut'
-                  }}
-                />
-                {/* Upward Pulse Left */}
-                <motion.circle
-                  cx={68}
-                  cy={88}
-                  r="1.8"
-                  fill="#8FB3FF"
-                  animate={{
-                    cx: [68, 66, 66],
-                    cy: [88, 55, 30],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 1.6,
-                    repeat: Infinity,
-                    delay: 0.5,
-                    ease: 'easeInOut'
-                  }}
-                />
-                {/* Upward Pulse Right */}
-                <motion.circle
-                  cx={68}
-                  cy={88}
-                  r="1.8"
-                  fill="#8FB3FF"
-                  animate={{
-                    cx: [68, 70, 70],
-                    cy: [88, 55, 30],
-                    opacity: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 1.6,
-                    repeat: Infinity,
-                    delay: 1.5,
-                    ease: 'easeInOut'
-                  }}
-                />
+                {/* Vascular loop pathways branching from the heart */}
+                {[
+                  { id: "brain-left",  d: "M68,88 C68,75 64,55 64,25" },
+                  { id: "brain-right", d: "M68,88 C68,75 72,55 72,25" },
+                  { id: "arm-left",    d: "M68,88 C58,88 44,105 28,145" },
+                  { id: "arm-right",   d: "M68,88 C78,88 92,105 108,145" },
+                  { id: "leg-left",    d: "M68,88 L68,145 C64,195 56,255 52,335" },
+                  { id: "leg-right",   d: "M68,88 L68,145 C72,195 80,255 84,335" }
+                ].map((p, i) => (
+                  <g key={p.id}>
+                    {/* Subtle structural trace path */}
+                    <path
+                      d={p.d}
+                      fill="none"
+                      stroke="rgba(143, 179, 255, 0.1)"
+                      strokeWidth="0.6"
+                      strokeLinecap="round"
+                    />
+                    {/* Active compound flow (dashed SVG flow animation) */}
+                    <motion.path
+                      d={p.d}
+                      fill="none"
+                      stroke="#8FB3FF"
+                      strokeWidth="0.9"
+                      strokeLinecap="round"
+                      strokeDasharray="3, 18"
+                      animate={{ strokeDashoffset: [0, 21] }}
+                      transition={{
+                        duration: 2.0,
+                        repeat: Infinity,
+                        ease: 'linear',
+                        delay: i * 0.25
+                      }}
+                    />
+                  </g>
+                ))}
               </>
             )}
 
-            {/* Stage 4: Regulation (HPA Axis Brain -> Adrenals signals) */}
+            {/* Stage 4: Regulation (HPA Axis neural signaling & calming ripples) */}
             {activeStage === 3 && (
               <>
-                {/* Brain Glow */}
+                {/* Brain Calming Slow Glow */}
                 <motion.circle
                   cx="68"
                   cy="20"
-                  r="8"
-                  fill={`${stageColor}22`}
-                  animate={{ scale: [1, 1.25, 1], opacity: [0.3, 0.7, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                  r="9"
+                  fill="rgba(143, 179, 255, 0.15)"
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.7, 0.3] }}
+                  transition={{ duration: 3.0, repeat: Infinity, ease: 'easeInOut' }}
+                />
+                <motion.circle
+                  cx="68"
+                  cy="20"
+                  r="4"
+                  fill="rgba(143, 179, 255, 0.3)"
+                  animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.8, 0.4] }}
+                  transition={{ duration: 3.0, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
                 />
                 
-                {/* Adrenal/Kidney Glows */}
+                {/* Adrenal cores (static tiny glowing nodes) */}
+                <circle cx="60" cy="135" r="1.5" fill="#ffe296" />
+                <circle cx="76" cy="135" r="1.5" fill="#ffe296" />
+
+                {/* HPA Axis Paths: Down the spine, branching to adrenals */}
+                <path
+                  d="M68,20 L68,115 C68,120 63,125 60,135"
+                  stroke="rgba(143, 179, 255, 0.2)"
+                  strokeWidth="0.5"
+                  strokeDasharray="1,2"
+                  fill="none"
+                />
+                <path
+                  d="M68,20 L68,115 C68,120 73,125 76,135"
+                  stroke="rgba(143, 179, 255, 0.2)"
+                  strokeWidth="0.5"
+                  strokeDasharray="1,2"
+                  fill="none"
+                />
+                
+                {/* High-frequency neural signals down the HPA paths */}
+                <motion.path
+                  d="M68,20 L68,115 C68,120 63,125 60,135"
+                  fill="none"
+                  stroke="#ffe296"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeDasharray="4, 40"
+                  animate={{ strokeDashoffset: [0, 44] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+                />
+                <motion.path
+                  d="M68,20 L68,115 C68,120 73,125 76,135"
+                  fill="none"
+                  stroke="#ffe296"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeDasharray="4, 40"
+                  animate={{ strokeDashoffset: [0, 44] }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: 'linear', delay: 0.75 }}
+                />
+                
+                {/* Adrenal Calming Ripples (concentric wave ripples radiating outward) */}
+                {/* Left Adrenal Calming waves */}
                 <motion.circle
                   cx="60"
                   cy="135"
-                  r="5"
-                  fill="#ffe29622"
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.8, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+                  r="3"
+                  fill="none"
+                  stroke="#ffe296"
+                  strokeWidth="0.5"
+                  animate={{ scale: [1, 3.5], opacity: [0.8, 0] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeOut', delay: 0.0 }}
+                />
+                <motion.circle
+                  cx="60"
+                  cy="135"
+                  r="3"
+                  fill="none"
+                  stroke="#ffe296"
+                  strokeWidth="0.5"
+                  animate={{ scale: [1, 3.5], opacity: [0.8, 0] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeOut', delay: 0.67 }}
+                />
+                <motion.circle
+                  cx="60"
+                  cy="135"
+                  r="3"
+                  fill="none"
+                  stroke="#ffe296"
+                  strokeWidth="0.5"
+                  animate={{ scale: [1, 3.5], opacity: [0.8, 0] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeOut', delay: 1.33 }}
+                />
+
+                {/* Right Adrenal Calming waves */}
+                <motion.circle
+                  cx="76"
+                  cy="135"
+                  r="3"
+                  fill="none"
+                  stroke="#ffe296"
+                  strokeWidth="0.5"
+                  animate={{ scale: [1, 3.5], opacity: [0.8, 0] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeOut', delay: 0.0 }}
                 />
                 <motion.circle
                   cx="76"
                   cy="135"
-                  r="5"
-                  fill="#ffe29622"
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.8, 0.3] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-                />
-
-                {/* HPA Axis Paths: Straight down the spine then branching */}
-                <path
-                  d="M68,20 L68,115 L60,135"
-                  stroke={stageColor}
-                  strokeWidth="0.6"
-                  strokeDasharray="1.5,2.5"
+                  r="3"
                   fill="none"
-                  opacity="0.35"
+                  stroke="#ffe296"
+                  strokeWidth="0.5"
+                  animate={{ scale: [1, 3.5], opacity: [0.8, 0] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeOut', delay: 0.67 }}
                 />
-                <path
-                  d="M68,20 L68,115 L76,135"
-                  stroke={stageColor}
-                  strokeWidth="0.6"
-                  strokeDasharray="1.5,2.5"
+                <motion.circle
+                  cx="76"
+                  cy="135"
+                  r="3"
                   fill="none"
-                  opacity="0.35"
-                />
-                
-                {/* Pulse 1: Left pathway */}
-                <motion.circle
-                  cx={68}
-                  cy={20}
-                  r="1.6"
-                  fill="#ffe296"
-                  animate={{
-                    cx: [68, 68, 60],
-                    cy: [20, 115, 135],
-                    opacity: [0, 1, 1, 0]
-                  }}
-                  transition={{
-                    duration: 2.2,
-                    repeat: Infinity,
-                    ease: 'linear',
-                    times: [0, 0.8, 0.95, 1]
-                  }}
-                />
-                {/* Pulse 2: Right pathway */}
-                <motion.circle
-                  cx={68}
-                  cy={20}
-                  r="1.6"
-                  fill="#ffe296"
-                  animate={{
-                    cx: [68, 68, 76],
-                    cy: [20, 115, 135],
-                    opacity: [0, 1, 1, 0]
-                  }}
-                  transition={{
-                    duration: 2.2,
-                    repeat: Infinity,
-                    delay: 1.1,
-                    ease: 'linear',
-                    times: [0, 0.8, 0.95, 1]
-                  }}
+                  stroke="#ffe296"
+                  strokeWidth="0.5"
+                  animate={{ scale: [1, 3.5], opacity: [0.8, 0] }}
+                  transition={{ duration: 2.0, repeat: Infinity, ease: 'easeOut', delay: 1.33 }}
                 />
               </>
             )}
@@ -560,7 +681,7 @@ export const PillJourney: React.FC = () => {
                 style={{ background: stage.color }}
                 animate={{ opacity: [0.05, 0.15, 0.05] }}
                 transition={{ duration: 2.5, repeat: Infinity }}/>
-              <DynamicHumanInfographic activeStage={activeStage} stageColor={stage.color} />
+              <DynamicHumanInfographic activeStage={activeStage} />
             </div>
           </div>
 
