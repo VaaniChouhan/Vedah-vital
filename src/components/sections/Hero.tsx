@@ -108,11 +108,16 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.7, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5 w-full sm:w-auto pt-3"
           >
-            <Link to="/" className="w-full sm:w-auto">
+            <a 
+              href="https://www.amazon.com" 
+              target="_blank" 
+              rel="noreferrer"
+              className="w-full sm:w-auto focus:outline-none"
+            >
               <Button variant="primary" className="w-full sm:w-auto py-3.5 px-9">
-                shop collection
+                buy on amazon
               </Button>
-            </Link>
+            </a>
 
             {/* Video Play link */}
             <a 
@@ -147,17 +152,12 @@ export const Hero: React.FC = () => {
               <span>Non-GMO</span>
             </div>
 
-            {/* Buy on Amazon Button */}
-            <a 
-              href="https://www.amazon.com" 
-              target="_blank" 
-              rel="noreferrer"
-              className="focus:outline-none"
-            >
+            {/* Shop Collection Button */}
+            <Link to="/" className="focus:outline-none">
               <Button variant="outline" className="py-2.5 px-6 text-[10px] uppercase tracking-wider font-semibold rounded-full border-white text-white hover:bg-white hover:text-[var(--color-navy-deep)] transition-all duration-300">
-                buy on amazon
+                shop collection
               </Button>
-            </a>
+            </Link>
           </motion.div>
 
         </div>
