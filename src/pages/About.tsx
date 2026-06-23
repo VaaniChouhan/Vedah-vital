@@ -39,7 +39,7 @@ export const About: React.FC = () => {
       <main className="flex-grow bg-white text-[var(--color-text)]">
 
         {/* ── Hero Banner ── */}
-        <section className="pt-36 pb-24 text-center relative overflow-hidden bg-[var(--color-navy-light)] border-b border-[rgba(10, 25, 47,0.15)]">
+        <section className="pt-36 pb-24 text-center relative overflow-clip bg-[var(--color-navy-light)] border-b border-[rgba(10, 25, 47,0.15)]">
           {/* Watermark - darkened */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-watermark pointer-events-none select-none opacity-65 whitespace-nowrap">
             our story
@@ -60,7 +60,7 @@ export const About: React.FC = () => {
         </section>
 
         {/* ── Brand Narrative ── */}
-        <section className="py-20 md:py-28 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+        <section className="py-20 md:py-28 relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
                     <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
             <AnimatedSection className="flex flex-col gap-6 text-left border-l border-[rgba(10, 25, 47,0.15)] pl-6 md:pl-10 py-4">
@@ -109,7 +109,7 @@ export const About: React.FC = () => {
         </section>
 
         {/* ── Extraction Mastery ── */}
-        <section className="py-20 md:py-28 bg-[var(--color-navy-light)] relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+        <section className="py-20 md:py-28 bg-[var(--color-navy-light)] relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
                               <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 text-center">
             
             <AnimatedSection className="max-w-2xl mx-auto flex flex-col items-center gap-4 mb-16">

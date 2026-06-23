@@ -17,7 +17,7 @@ export const Testimonials: React.FC = () => {
   const activeReview = TESTIMONIALS_DATA[activeIndex];
 
   return (
-    <section className="bg-white text-[var(--color-text)] py-14 md:py-18 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+    <section className="bg-white text-[var(--color-text)] py-14 md:py-18 relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
       {/* Background watermark - darkened */}
       <div className="absolute left-[-10%] top-[30%] opacity-30 pointer-events-none select-none">
         <span className="text-watermark">vedah vital</span>

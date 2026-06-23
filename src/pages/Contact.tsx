@@ -55,7 +55,7 @@ export const Contact: React.FC = () => {
       <main className="flex-grow bg-white text-[var(--color-text)]">
 
         {/* Hero Banner */}
-        <section className="pt-36 pb-20 text-center relative overflow-hidden bg-[var(--color-navy-light)] border-b border-[rgba(10, 25, 47,0.15)]">
+        <section className="pt-36 pb-20 text-center relative overflow-clip bg-[var(--color-navy-light)] border-b border-[rgba(10, 25, 47,0.15)]">
           {/* Watermark - darkened */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-watermark pointer-events-none select-none opacity-65 whitespace-nowrap">
             contact us
@@ -75,7 +75,7 @@ export const Contact: React.FC = () => {
         </section>
 
         {/* Content Section */}
-        <section className="py-20 md:py-28 relative overflow-hidden">
+        <section className="py-20 md:py-28 relative overflow-clip">
                     
           <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 relative z-10">
             
@@ -140,10 +140,10 @@ export const Contact: React.FC = () => {
                       exit={{ opacity: 0 }}
                     >
                       {[
-                        { id: 'name', label: 'Full Name *', type: 'text', required: true, placeholder: 'John Doe' },
-                        { id: 'email', label: 'Email Address *', type: 'email', required: true, placeholder: 'john@example.com' },
-                        { id: 'batchCode', label: 'Bottle Batch Code (Optional)', type: 'text', required: false, placeholder: 'e.g. VV-ASH-2026-001' },
-                      ].map(({ id, label, type, required, placeholder }) => (
+                        { id: 'name', label: 'Full Name *', type: 'text', required: true, placeholder: 'John Doe', maxLength: 100 },
+                        { id: 'email', label: 'Email Address *', type: 'email', required: true, placeholder: 'john@example.com', maxLength: 100 },
+                        { id: 'batchCode', label: 'Bottle Batch Code (Optional)', type: 'text', required: false, placeholder: 'e.g. VV-ASH-2026-001', maxLength: 20 },
+                      ].map(({ id, label, type, required, placeholder, maxLength }) => (
                         <div key={id}>
                           <label
                             htmlFor={id}
@@ -158,6 +158,7 @@ export const Contact: React.FC = () => {
                             required={required}
                             value={(formData as Record<string, string>)[id]}
                             onChange={handleChange}
+                            maxLength={maxLength}
                             className={inputCls}
                             placeholder={placeholder}
                           />
@@ -176,6 +177,7 @@ export const Contact: React.FC = () => {
                           name="message"
                           required
                           rows={4}
+                          maxLength={1000}
                           value={formData.message}
                           onChange={handleChange}
                           className={inputCls + ' resize-none'}

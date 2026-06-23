@@ -505,24 +505,24 @@ export const PillJourney: React.FC = () => {
   }, [isAutoplay]);
 
   useEffect(() => {
-    const handleAutoScroll = () => {
-      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
-        const container = document.getElementById('stage-selectors-container');
-        const activeBtn = document.getElementById(`stage-btn-${activeStage}`);
-        if (container && activeBtn) {
-          const scrollLeft = activeBtn.offsetLeft - (container.clientWidth - activeBtn.clientWidth) / 2;
-          container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-        }
-      }
-    };
-    const t = setTimeout(handleAutoScroll, 100);
-    return () => clearTimeout(t);
+    const container = document.getElementById('stage-selectors-container');
+    const activeBtn = document.getElementById(`stage-btn-${activeStage}`);
+    // Only auto-scroll if the container is in horizontal (mobile) layout mode.
+    // We detect this by checking if the container's scrollWidth exceeds its clientWidth,
+    // which only happens when overflow-x:auto is active (i.e. below lg breakpoint).
+    if (container && activeBtn && container.scrollWidth > container.clientWidth) {
+      const scrollLeft = activeBtn.offsetLeft - (container.clientWidth - activeBtn.clientWidth) / 2;
+      const t = setTimeout(() => {
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+      }, 100);
+      return () => clearTimeout(t);
+    }
   }, [activeStage]);
 
   const stage = stages[activeStage];
 
   return (
-    <section className="bg-[#0A192F] text-white py-14 md:py-20 relative overflow-hidden border-b border-[rgba(255,255,255,0.06)]">
+    <section className="bg-[#0A192F] text-white py-14 md:py-20 relative overflow-clip border-b border-[rgba(255,255,255,0.06)]">
 
       {/* Watermark */}
       <div className="absolute right-[-5%] top-[10%] opacity-[0.04] pointer-events-none select-none">
@@ -592,9 +592,9 @@ export const PillJourney: React.FC = () => {
             ))}
           </div>
 
-          {/* CENTER — body infographic with larger borderless container (compact aspect-[3/4]) */}
+          {/* CENTER — body infographic, height-fixed so the tall silhouette is never clipped */}
           <div className="lg:col-span-4 flex justify-center items-center py-2">
-            <div className="relative w-[240px] md:w-[280px] lg:w-[300px] aspect-[3/4] overflow-hidden">
+            <div className="relative w-[240px] md:w-[280px] lg:w-[300px] h-[360px] md:h-[420px] overflow-hidden">
               <motion.div className="absolute inset-0 rounded-full blur-3xl pointer-events-none opacity-10"
                 style={{ background: stage.color }}
                 animate={{ opacity: [0.05, 0.15, 0.05] }}

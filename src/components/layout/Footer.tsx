@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   return (
-    <footer className="relative bg-[var(--color-navy)] text-white overflow-hidden pt-20 pb-10 border-t border-[rgba(255,255,255,0.15)]">
+    <footer className="relative bg-[var(--color-navy)] text-white overflow-clip pt-20 pb-10 border-t border-[rgba(255,255,255,0.15)]">
 
       <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
         
@@ -24,11 +24,11 @@ export const Footer: React.FC = () => {
             </span>
           </Link>
  
-          <nav className="flex flex-col gap-3 font-sans text-sm text-white/80">
-            <Link to="/" className="hover:text-white transition-colors">Home</Link>
-            <Link to="/about" className="hover:text-white transition-colors">Our Story</Link>
-            <Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link>
-            <Link to="/verify" className="hover:text-white transition-colors font-bold">Verify Your Product</Link>
+          <nav className="flex flex-col gap-1 font-sans text-sm text-white/80">
+            <Link to="/" className="hover:text-white transition-colors py-1.5">Home</Link>
+            <Link to="/about" className="hover:text-white transition-colors py-1.5">Our Story</Link>
+            <Link to="/contact" className="hover:text-white transition-colors py-1.5">Contact Us</Link>
+            <Link to="/verify" className="hover:text-white transition-colors font-bold py-1.5">Verify Your Product</Link>
           </nav>
         </div>
 
@@ -46,7 +46,7 @@ export const Footer: React.FC = () => {
               placeholder="Enter your email" 
               className="bg-transparent border-0 focus:outline-none font-sans text-sm text-white placeholder-white/50 w-full pr-4"
             />
-            <button className="text-white hover:text-white/80 cursor-pointer">
+            <button className="text-white hover:text-white/80 cursor-pointer w-10 h-10 flex items-center justify-center shrink-0">
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -70,14 +70,14 @@ export const Footer: React.FC = () => {
             <span className="font-sans text-[10px] font-bold uppercase tracking-widest text-white/70">
               Connect With Apothecary
             </span>
-            <div className="flex gap-4 items-center text-white/80">
-              <a href="#" className="hover:text-white transition-colors flex items-center">
+            <div className="flex gap-2 items-center text-white/80">
+              <a href="#" className="hover:text-white transition-colors w-10 h-10 flex items-center justify-center" aria-label="Instagram">
                 <InstagramIcon size={18} color="currentColor" strokeWidth={1.75} />
               </a>
-              <a href="#" className="hover:text-white transition-colors flex items-center">
+              <a href="#" className="hover:text-white transition-colors w-10 h-10 flex items-center justify-center" aria-label="Telegram">
                 <SendIcon size={18} color="currentColor" strokeWidth={1.75} />
               </a>
-              <a href="mailto:info@vedahvital.com" className="hover:text-white transition-colors flex items-center">
+              <a href="mailto:info@vedahvital.com" className="hover:text-white transition-colors w-10 h-10 flex items-center justify-center" aria-label="Email support">
                 <MailFilledIcon size={18} color="currentColor" strokeWidth={1.75} />
               </a>
             </div>

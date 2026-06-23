@@ -61,7 +61,7 @@ export const PurityStandards: React.FC = () => {
             className="origin-[50px_50px]"
           />
 
-          {/* Golden floating pollen */}
+          {/* Golden floating pollen - paused when out of view */}
           <motion.circle cx="34" cy="38" r="1.5" fill="#FFE296" animate={{ y: [0, -8], opacity: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity }} />
           <motion.circle cx="66" cy="30" r="1.5" fill="#FFE296" animate={{ y: [0, -6], opacity: [0, 1, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: 0.5 }} />
           <motion.circle cx="50" cy="28" r="2" fill="#FFF" animate={{ y: [0, -10], opacity: [0, 1, 0] }} transition={{ duration: 2.2, repeat: Infinity, delay: 0.9 }} />
@@ -159,6 +159,7 @@ export const PurityStandards: React.FC = () => {
             animate={{ rotate: 360 }}
             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             className="origin-[50px_45px]"
+            style={{ willChange: 'transform' }}
           >
             {/* Hexagon bonds */}
             <polygon points="50,22 70,33 70,57 50,68 30,57 30,33" stroke="url(#molGrad)" strokeWidth="2" strokeLinejoin="round" />
@@ -205,7 +206,7 @@ export const PurityStandards: React.FC = () => {
   ];
 
   return (
-    <section className="bg-gradient-to-r from-[rgba(10, 25, 47,0.22)] via-[rgba(10, 25, 47,0.06)] to-white text-[var(--color-text)] py-20 md:py-28 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+    <section className="bg-gradient-to-r from-[rgba(10, 25, 47,0.22)] via-[rgba(10, 25, 47,0.06)] to-white text-[var(--color-text)] py-20 md:py-28 relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
       
       {/* Outer wrapper */}
       <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 flex flex-col gap-16 md:gap-20">

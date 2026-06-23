@@ -6,7 +6,7 @@ import { AnimatedSection } from '../ui/AnimatedSection';
 
 export const Heritage: React.FC = () => {
   return (
-    <section className="bg-[var(--color-navy-light)] text-[var(--color-text)] py-14 md:py-18 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+    <section className="bg-[var(--color-navy-light)] text-[var(--color-text)] py-14 md:py-18 relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
 
       <div className="absolute right-[-5%] top-[10%] opacity-30 pointer-events-none select-none">
         <span className="text-watermark">vedah vital</span>

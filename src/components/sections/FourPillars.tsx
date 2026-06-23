@@ -349,7 +349,7 @@ export const FourPillars: React.FC = () => {
   ];
 
   return (
-    <section className="bg-white text-[var(--color-text)] relative py-20 md:py-28 overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+    <section className="bg-white text-[var(--color-text)] relative py-20 md:py-28 overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
       <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 relative z-10">
         
         {/* Header (replicates reference style) */}

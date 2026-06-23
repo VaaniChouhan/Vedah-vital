@@ -7,22 +7,30 @@ import { Button } from '../ui/Button';
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  const resetTimer = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 5);
+    }, 5000);
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % 5);
-  }, []);
+    resetTimer();
+  }, [resetTimer]);
 
   const prevSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev - 1 + 5) % 5);
-  }, []);
+    resetTimer();
+  }, [resetTimer]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [nextSlide]);
+    resetTimer();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [resetTimer]);
 
   const renderSlideContent = (slideIndex: number) => {
     switch (slideIndex) {
@@ -324,12 +332,12 @@ export const Hero: React.FC = () => {
   return (
     <section 
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center pt-28 pb-16 overflow-hidden bg-white"
+      className="relative min-h-[100svh] flex items-center justify-center pt-28 pb-16 overflow-clip bg-white"
     >
       {/* 1. Full-Width Background Parallax Layer */}
       <motion.div 
         style={{ y: yBg }} 
-        className="absolute inset-0 w-full h-[110vh] pointer-events-none z-0"
+        className="absolute inset-0 w-full h-full pointer-events-none z-0"
       >
         <img 
           src="/images/hero-bg.png?v=4" 
@@ -445,35 +453,37 @@ export const Hero: React.FC = () => {
               </AnimatePresence>
             </motion.div>
 
-            {/* Carousel Controls (Chevron Navigation) - Visible on Hover */}
+            {/* Carousel Controls (Chevron Navigation) — hidden on mobile, visible on hover for md+ */}
             <button
               onClick={prevSlide}
-              className="absolute left-2 md:left-4 w-9 h-9 rounded-full bg-white/40 backdrop-blur-md border border-white/30 text-[var(--color-navy)] hover:text-white flex items-center justify-center hover:bg-[var(--color-navy)] transition-all duration-300 z-30 opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+              className="hidden md:flex absolute left-2 md:left-4 w-11 h-11 rounded-full bg-white/40 backdrop-blur-md border border-white/30 text-[var(--color-navy)] hover:text-white items-center justify-center hover:bg-[var(--color-navy)] transition-all duration-300 z-30 opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
               aria-label="Previous Slide"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-2 md:right-4 w-9 h-9 rounded-full bg-white/40 backdrop-blur-md border border-white/30 text-[var(--color-navy)] hover:text-white flex items-center justify-center hover:bg-[var(--color-navy)] transition-all duration-300 z-30 opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+              className="hidden md:flex absolute right-2 md:right-4 w-11 h-11 rounded-full bg-white/40 backdrop-blur-md border border-white/30 text-[var(--color-navy)] hover:text-white items-center justify-center hover:bg-[var(--color-navy)] transition-all duration-300 z-30 opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
               aria-label="Next Slide"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
 
-            {/* Pagination Indicators (Dots) */}
-            <div className="flex justify-center gap-2 absolute bottom-[-20px] md:bottom-[-25px] left-1/2 -translate-x-1/2 z-30 bg-white/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/30 shadow-md">
+            {/* Pagination Indicators (Dots) — padded for WCAG 44px touch target */}
+            <div className="flex justify-center items-center gap-1 absolute bottom-[-20px] md:bottom-[-25px] left-1/2 -translate-x-1/2 z-30 bg-white/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/30 shadow-md">
               {[0, 1, 2, 3, 4].map((index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentSlide(index)}
-                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer focus:outline-none ${
-                    currentSlide === index 
-                      ? 'bg-[var(--color-navy)] w-5' 
-                      : 'bg-[var(--color-navy)]/35 hover:bg-[var(--color-navy)]/65 w-2'
-                  }`}
+                  onClick={() => { setCurrentSlide(index); resetTimer(); }}
+                  className="p-2 -m-1 focus:outline-none cursor-pointer"
                   aria-label={`Go to slide ${index + 1}`}
-                />
+                >
+                  <span className={`block h-2 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? 'bg-[var(--color-navy)] w-5'
+                      : 'bg-[var(--color-navy)]/35 hover:bg-[var(--color-navy)]/65 w-2'
+                  }`} />
+                </button>
               ))}
             </div>
 

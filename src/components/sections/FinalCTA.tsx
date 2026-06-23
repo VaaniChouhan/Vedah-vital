@@ -6,10 +6,10 @@ import { Button } from '../ui/Button';
 
 export const FinalCTA: React.FC = () => {
   return (
-    <section className="bg-white text-[var(--color-text)] py-14 md:py-18 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+    <section className="bg-white text-[var(--color-text)] py-14 md:py-18 relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
       
-      {/* Bottom wave backdrop decoration matching reference visual - darkened/more visible */}
-      <div className="absolute right-0 bottom-0 w-full lg:w-[45%] h-[80vh] pointer-events-none z-0 opacity-50 text-[var(--color-navy)]">
+      {/* Bottom wave backdrop decoration — reduced opacity on mobile to prevent contrast issues */}
+      <div className="absolute right-0 bottom-0 w-full lg:w-[45%] h-[80vh] pointer-events-none z-0 opacity-10 md:opacity-50 text-[var(--color-navy)]">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="w-full h-full fill-current">
           <path d="M0 100 C40 100, 60 70, 70 40 C80 15, 90 5, 100 0 L100 100 Z" />
         </svg>

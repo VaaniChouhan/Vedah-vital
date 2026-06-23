@@ -9,13 +9,18 @@ import { LAB_REPORTS, type LabTestReport } from '../lib/mockData';
 import { AnimatedSection } from '../components/ui/AnimatedSection';
 
 export const Verify: React.FC = () => {
+  // Validates batch code format: VV-XXX(X)-YYYY-ZZZ
+  const BATCH_CODE_REGEX = /^VV-[A-Z]{3,4}-\d{4}-\d{3}$/;
+
   const [code, setCode] = useState(() => {
     if (typeof window === 'undefined') return '';
     const params = new URLSearchParams(window.location.search);
     const batchParam = params.get('batch');
     const sourceParam = params.get('source');
     if (sourceParam === 'qr' && batchParam) {
-      return batchParam.trim().toUpperCase();
+      const trimmed = batchParam.trim().toUpperCase();
+      // Guard against malformed QR scans
+      return BATCH_CODE_REGEX.test(trimmed) ? trimmed : '';
     }
     return '';
   });
@@ -115,7 +120,7 @@ export const Verify: React.FC = () => {
       <main className="flex-grow bg-white text-[var(--color-text)]">
 
         {/* Hero Banner */}
-        <section className="pt-36 pb-20 text-center relative overflow-hidden bg-[var(--color-navy-light)] border-b border-[rgba(10, 25, 47,0.15)]">
+        <section className="pt-36 pb-20 text-center relative overflow-clip bg-[var(--color-navy-light)] border-b border-[rgba(10, 25, 47,0.15)]">
           {/* Watermark - darkened */}
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-watermark pointer-events-none select-none opacity-65 whitespace-nowrap">
             verify your product
@@ -135,7 +140,7 @@ export const Verify: React.FC = () => {
         </section>
 
         {/* Search & Results Section */}
-        <section className="py-16 md:py-24 relative overflow-hidden">
+        <section className="py-16 md:py-24 relative overflow-clip">
                     
           <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 relative z-10">
 
@@ -153,6 +158,7 @@ export const Verify: React.FC = () => {
                     name="batchCode"
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
+                    maxLength={20}
                     placeholder="e.g. VV-ASH-2026-001"
                     className="w-full bg-transparent font-sans text-sm focus:outline-none text-[var(--color-heading)] placeholder-[rgba(10, 25, 47,0.4)]"
                   />
@@ -471,7 +477,7 @@ export const Verify: React.FC = () => {
               >
                 Edit and Verify Manually
               </Button>
-              <a href={`mailto:info@vedahvital.com?subject=Unverified QR Code Alert: ${qrScannedBatch}`} className="w-full focus:outline-none">
+              <a href={`mailto:info@vedahvital.com?subject=${encodeURIComponent(`Unverified QR Code Alert: ${qrScannedBatch}`)}`} className="w-full focus:outline-none">
                 <Button
                   variant="outline"
                   className="w-full border-[var(--color-navy)]/20 text-[var(--color-navy)] hover:bg-[var(--color-navy-light)] justify-center"

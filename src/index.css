@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --breakpoint-lg: 960px;
+}
+
 @layer base {
   :root {
     /* STRICT NAVY & WHITE PALETTE */
@@ -49,6 +53,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    /* Do NOT set overflow on html — breaks position:fixed in desktop mode */
   }
 
   body {
@@ -57,7 +62,7 @@
     font-family: var(--font-body);
     line-height: 1.75;
     min-height: 100vh;
-    overflow-x: hidden;
+    /* No overflow constraint on body — let #root handle containment */
   }
 
   #root {
@@ -65,6 +70,7 @@
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
+    overflow-x: clip; /* Single contained clip boundary — safe for all viewport modes */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -310,9 +316,9 @@
     scrollbar-width: none;  /* Firefox */
   }
 
-  /* Off-screen rendering optimization */
+  /* Off-screen rendering optimization — uses contain:content instead of content-visibility
+     to avoid blank sections when switching desktop/mobile mode in browser */
   .optimize-render {
-    content-visibility: auto;
-    contain-intrinsic-size: 0 500px;
+    contain: layout style;
   }
 }

@@ -9,7 +9,7 @@ export const StatsCounter: React.FC = () => {
   ];
 
   return (
-    <section className="bg-white text-[var(--color-text)] py-14 md:py-18 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
+    <section className="bg-white text-[var(--color-text)] py-14 md:py-18 relative overflow-clip border-b border-[rgba(10, 25, 47,0.15)]">
 
       <div className="absolute left-[-5%] top-[10%] opacity-30 pointer-events-none select-none">
         <span className="text-watermark">vedah vital</span>

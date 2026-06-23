@@ -12,14 +12,20 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      setIsScrolled(window.scrollY > 20);
+    };
+    const handleResize = () => {
+      // Auto-close mobile menu when browser switches to desktop mode (≥768px)
+      if (window.innerWidth >= 768) {
+        setIsMobileMenuOpen(false);
       }
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const navLinks = [
@@ -100,11 +106,12 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle — 44×44px WCAG 2.5.5 compliant tap target */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-1 text-[var(--color-heading)] hover:text-[var(--color-navy)] transition-colors focus:outline-none"
+            className="md:hidden w-11 h-11 flex items-center justify-center text-[var(--color-heading)] hover:text-[var(--color-navy)] transition-colors focus:outline-none rounded-lg -mr-2"
             aria-label="Toggle Menu"
+            aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -119,7 +126,7 @@ export const Navbar: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-0 top-[60px] bottom-0 z-40 md:hidden bg-white text-[var(--color-text)] px-8 pt-8 flex flex-col justify-between pb-12 shadow-lg border-t border-[rgba(10, 25, 47,0.15)]"
+            className="fixed inset-x-0 top-[64px] bottom-0 z-40 md:hidden bg-white text-[var(--color-text)] px-8 pt-8 flex flex-col justify-between pb-12 shadow-lg border-t border-[rgba(10, 25, 47,0.15)]"
           >
             {/* Nav List */}
             <nav className="flex flex-col gap-6">
