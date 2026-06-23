@@ -40,15 +40,15 @@ export const Hero: React.FC = () => {
             <div className="absolute w-[80%] h-[80%] rounded-full bg-gradient-to-tr from-[var(--color-navy)]/25 to-white/30 filter blur-2xl opacity-80 z-0" />
 
             {/* Info badge 1 (Claymorphic) */}
-            <div className="absolute top-[12%] left-[-8%] z-20 clay-card-navy py-3 px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none">
-              <span className="text-[7px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none">FORMULA TYPE</span>
-              <span className="text-[10px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none">5% WITHANOLIDES</span>
+            <div className="absolute top-[12%] left-2 sm:left-[-4%] md:left-[-8%] z-20 clay-card-navy py-2 px-3 sm:py-3 sm:px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none">
+              <span className="text-[7px] sm:text-[8px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none">FORMULA TYPE</span>
+              <span className="text-[10px] sm:text-[11px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none">5% WITHANOLIDES</span>
             </div>
 
             {/* Info badge 2 (Glassmorphic) */}
-            <div className="absolute bottom-[18%] right-[-8%] z-20 glass-card-navy py-3 px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none">
-              <span className="text-[7px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none font-semibold">PURITY GUARANTEE</span>
-              <span className="text-[10px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none font-bold">99.8% BIO-ACTIVE</span>
+            <div className="absolute bottom-[18%] right-2 sm:right-[-4%] md:right-[-8%] z-20 glass-card-navy py-2 px-3 sm:py-3 sm:px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none">
+              <span className="text-[7px] sm:text-[8px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none font-semibold">PURITY GUARANTEE</span>
+              <span className="text-[10px] sm:text-[11px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none font-bold">99.8% BIO-ACTIVE</span>
             </div>
 
             {/* Isolated product bottle image */}
@@ -68,15 +68,15 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
-            className="w-full h-full flex items-center justify-center p-4"
+            className="w-full h-full flex items-center justify-center p-2 sm:p-4"
           >
-            <div className="w-[85%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-4 flex flex-col items-center justify-between z-10 overflow-hidden text-[var(--color-heading)]">
-              <div className="w-full flex justify-between items-center px-2 pb-2 border-b border-gray-200">
-                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Supplement Facts</span>
-                <span className="font-sans text-[10px] font-semibold text-gray-500">60 Vegetarian Capsules</span>
+            <div className="w-full sm:w-[90%] md:w-[85%] h-[96%] sm:h-[92%] md:h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-3 sm:p-4 flex flex-col items-center justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="w-full flex justify-between items-center px-1 sm:px-2 pb-1.5 sm:pb-2 border-b border-gray-200">
+                <span className="font-sans text-[11px] sm:text-xs md:text-sm font-bold tracking-wider uppercase text-[var(--color-navy)]">Supplement Facts</span>
+                <span className="font-sans text-[9px] sm:text-[10px] md:text-xs font-semibold text-gray-500">60 Vegetarian Capsules</span>
               </div>
               
-              <div className="flex-1 w-full flex items-center justify-center overflow-hidden my-2.5">
+              <div className="flex-1 w-full flex items-center justify-center overflow-hidden my-2 sm:my-2.5">
                 <img 
                   src="/images/supplement_facts.png" 
                   alt="Supplement Facts Label" 
@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
                 />
               </div>
               
-              <div className="w-full text-center text-[9px] font-sans text-gray-500 leading-normal px-2">
+              <div className="w-full text-center text-[9px] sm:text-[10px] md:text-xs font-sans text-gray-500 leading-normal px-1 sm:px-2">
                 Take 1 capsule daily. Standardized to 5% withanolides for maximum potency.
               </div>
             </div>
@@ -99,18 +99,18 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
-            className="w-full h-full flex items-center justify-center p-3"
+            className="w-full h-full flex items-center justify-center p-1.5 sm:p-3"
           >
-            <div className="w-[92%] h-[92%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-3.5 sm:p-4.5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
-              <div className="pb-1.5 border-b border-gray-200 text-center">
-                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Active Ingredients</span>
+            <div className="w-full sm:w-[92%] h-[98%] sm:h-[92%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-2.5 sm:p-4.5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="pb-1 sm:pb-1.5 border-b border-gray-200 text-center">
+                <span className="font-sans text-[11px] sm:text-xs md:text-sm font-bold tracking-wider uppercase text-[var(--color-navy)]">Active Ingredients</span>
               </div>
 
               {/* Side-by-side ingredient cards */}
-              <div className="flex-1 grid grid-cols-2 gap-2 sm:gap-3 my-2 sm:my-3">
+              <div className="flex-1 grid grid-cols-2 gap-1.5 sm:gap-3 my-1.5 sm:my-3">
                 {/* Ashwagandha Card */}
-                <div className="flex flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 text-left">
-                  <div className="w-full aspect-[4/3] rounded-xl overflow-hidden shadow-inner border border-white bg-white">
+                <div className="flex flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-1.5 sm:p-2.5 text-left justify-between">
+                  <div className="w-full aspect-[3/2] rounded-xl overflow-hidden shadow-inner border border-white bg-white">
                     <img 
                       src="/images/ashwagandha_plant_root.png" 
                       alt="Ashwagandha Plant & Root" 
@@ -118,18 +118,20 @@ export const Hero: React.FC = () => {
                       draggable="false"
                     />
                   </div>
-                  <div className="flex flex-col mt-2">
-                    <span className="font-sans text-[10px] font-bold text-[var(--color-heading)] leading-tight">KSM-66® Ashwagandha</span>
-                    <span className="font-sans text-[7px] text-[var(--color-navy)] font-bold tracking-wider uppercase mt-0.5">600mg Dose</span>
-                    <p className="font-sans text-[8px] text-[var(--color-text)] font-light leading-normal mt-1">
-                      Full-spectrum root extract standardized to 5% withanolides for potency.
-                    </p>
+                  <div className="flex flex-col mt-1.5 sm:mt-2 flex-1 justify-between">
+                    <div>
+                      <span className="font-sans text-[10.5px] xs:text-[11px] sm:text-xs font-bold text-[var(--color-heading)] leading-tight block">KSM-66® Ashwagandha</span>
+                      <span className="font-sans text-[8px] sm:text-[9px] text-[var(--color-navy)] font-bold tracking-wider uppercase mt-0.5 block">600mg Dose</span>
+                      <p className="font-sans text-[8.5px] xs:text-[9px] sm:text-[10px] text-[var(--color-text)] font-light leading-normal mt-0.5 sm:mt-1">
+                        Full-spectrum root extract standardized to 5% withanolides.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
                 {/* Black Pepper Card */}
-                <div className="flex flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 text-left">
-                  <div className="w-full aspect-[4/3] rounded-xl overflow-hidden shadow-inner border border-white bg-white">
+                <div className="flex flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-1.5 sm:p-2.5 text-left justify-between">
+                  <div className="w-full aspect-[3/2] rounded-xl overflow-hidden shadow-inner border border-white bg-white">
                     <img 
                       src="/images/black_peppercorns.png" 
                       alt="Black Peppercorns" 
@@ -137,18 +139,20 @@ export const Hero: React.FC = () => {
                       draggable="false"
                     />
                   </div>
-                  <div className="flex flex-col mt-2">
-                    <span className="font-sans text-[10px] font-bold text-[var(--color-heading)] leading-tight">Black Pepper Extract</span>
-                    <span className="font-sans text-[7px] text-[var(--color-navy)] font-bold tracking-wider uppercase mt-0.5">5mg Dose</span>
-                    <p className="font-sans text-[8px] text-[var(--color-text)] font-light leading-normal mt-1">
-                      Pure Bio-enhancing Piperine to maximize absorption of withanolides.
-                    </p>
+                  <div className="flex flex-col mt-1.5 sm:mt-2 flex-1 justify-between">
+                    <div>
+                      <span className="font-sans text-[10.5px] xs:text-[11px] sm:text-xs font-bold text-[var(--color-heading)] leading-tight block">Black Pepper Extract</span>
+                      <span className="font-sans text-[8px] sm:text-[9px] text-[var(--color-navy)] font-bold tracking-wider uppercase mt-0.5 block">5mg Dose</span>
+                      <p className="font-sans text-[8.5px] xs:text-[9px] sm:text-[10px] text-[var(--color-text)] font-light leading-normal mt-0.5 sm:mt-1">
+                        Pure Bio-enhancing Piperine to maximize absorption of actives.
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="text-center text-[8px] font-sans text-gray-500">
-                100% natural, vegetarian capsules with zero synthetic fillers or binders.
+              <div className="text-center text-[8.5px] xs:text-[9px] sm:text-[10px] font-sans text-gray-500">
+                100% natural, vegetarian capsules with zero synthetic fillers.
               </div>
             </div>
           </motion.div>
@@ -161,62 +165,62 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
-            className="w-full h-full flex items-center justify-center p-4"
+            className="w-full h-full flex items-center justify-center p-2 sm:p-4"
           >
-            <div className="w-[90%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-4 sm:p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
-              <div className="pb-2 border-b border-gray-200 text-center">
-                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Why KSM-66® Ashwagandha?</span>
+            <div className="w-full sm:w-[90%] h-[96%] sm:h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-3 sm:p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="pb-1.5 sm:pb-2 border-b border-gray-200 text-center">
+                <span className="font-sans text-[11px] sm:text-xs md:text-sm font-bold tracking-wider uppercase text-[var(--color-navy)]">Why KSM-66® Ashwagandha?</span>
               </div>
 
-              <div className="flex-1 flex flex-col justify-center gap-2 my-2 text-left">
-                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans font-bold border-b border-gray-100 pb-1 text-gray-400">
+              <div className="flex-1 flex flex-col justify-center gap-1.5 sm:gap-2 my-1.5 sm:my-2 text-left">
+                <div className="grid grid-cols-12 gap-1 text-[10px] sm:text-[11px] md:text-xs font-sans font-bold border-b border-gray-100 pb-1 text-gray-400">
                   <div className="col-span-5">Feature</div>
                   <div className="col-span-4 text-[var(--color-navy)]">KSM-66®</div>
                   <div className="col-span-3">Standard</div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                <div className="grid grid-cols-12 gap-1 text-[10px] sm:text-[11px] md:text-xs font-sans border-b border-gray-50 py-1 sm:py-1.5 items-center">
                   <div className="col-span-5 font-medium text-gray-600">Source</div>
                   <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
-                    <Check className="w-3 h-3 stroke-[3]" /> Roots Only
+                    <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" /> Roots Only
                   </div>
                   <div className="col-span-3 text-red-500 flex items-center gap-1">
-                    <X className="w-3 h-3" /> Leaf Waste
+                    <X className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Leaf Waste
                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                <div className="grid grid-cols-12 gap-1 text-[10px] sm:text-[11px] md:text-xs font-sans border-b border-gray-50 py-1 sm:py-1.5 items-center">
                   <div className="col-span-5 font-medium text-gray-600">Standardization</div>
                   <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
-                    <Check className="w-3 h-3 stroke-[3]" /> 5% Active
+                    <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" /> 5% Active
                   </div>
                   <div className="col-span-3 text-red-500 flex items-center gap-1">
-                    <X className="w-3 h-3" /> Unspecified
+                    <X className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Unspecified
                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                <div className="grid grid-cols-12 gap-1 text-[10px] sm:text-[11px] md:text-xs font-sans border-b border-gray-50 py-1 sm:py-1.5 items-center">
                   <div className="col-span-5 font-medium text-gray-600">Extraction</div>
                   <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
-                    <Check className="w-3 h-3 stroke-[3]" /> Green (Water)
+                    <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" /> Green (Water)
                   </div>
                   <div className="col-span-3 text-red-500 flex items-center gap-1">
-                    <X className="w-3 h-3" /> Solvents
+                    <X className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> Solvents
                   </div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                <div className="grid grid-cols-12 gap-1 text-[10px] sm:text-[11px] md:text-xs font-sans border-b border-gray-50 py-1 sm:py-1.5 items-center">
                   <div className="col-span-5 font-medium text-gray-600">Clinical Proof</div>
                   <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
-                    <Check className="w-3 h-3 stroke-[3]" /> 24+ Trials
+                    <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" /> 24+ Trials
                   </div>
                   <div className="col-span-3 text-red-500 flex items-center gap-1">
-                    <X className="w-3 h-3" /> None
+                    <X className="w-2.5 h-2.5 sm:w-3 sm:h-3" /> None
                   </div>
                 </div>
               </div>
 
-              <div className="text-center text-[9px] font-sans text-gray-500">
+              <div className="text-center text-[9px] sm:text-[10px] md:text-xs font-sans text-gray-500">
                 KSM-66® is the highest concentration, most bioavailable root extract.
               </div>
             </div>
@@ -230,16 +234,16 @@ export const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
-            className="w-full h-full flex items-center justify-center p-4"
+            className="w-full h-full flex items-center justify-center p-2 sm:p-4"
           >
-            <div className="w-[90%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-4 sm:p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
-              <div className="pb-2 border-b border-gray-200 text-center">
-                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Clinically Backed Benefits</span>
+            <div className="w-full sm:w-[90%] h-[96%] sm:h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-3.5 sm:p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="pb-1.5 sm:pb-2 border-b border-gray-200 text-center">
+                <span className="font-sans text-[11px] sm:text-xs md:text-sm font-bold tracking-wider uppercase text-[var(--color-navy)]">Clinically Backed Benefits</span>
               </div>
 
-              <div className="flex-1 flex flex-col justify-center gap-3.5 my-3 text-left">
+              <div className="flex-1 flex flex-col justify-center gap-2.5 sm:gap-3.5 my-2 sm:my-3 text-left">
                 <div>
-                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                  <div className="flex justify-between items-center text-[10px] sm:text-[11px] md:text-xs font-sans font-bold text-gray-700">
                     <span>Stress & Cortisol Reduction</span>
                     <span className="text-[var(--color-navy)]">-27.9%</span>
                   </div>
@@ -254,7 +258,7 @@ export const Hero: React.FC = () => {
                 </div>
 
                 <div>
-                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                  <div className="flex justify-between items-center text-[10px] sm:text-[11px] md:text-xs font-sans font-bold text-gray-700">
                     <span>Strength & Muscle Recovery</span>
                     <span className="text-[var(--color-navy)]">+17.8%</span>
                   </div>
@@ -269,7 +273,7 @@ export const Hero: React.FC = () => {
                 </div>
 
                 <div>
-                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                  <div className="flex justify-between items-center text-[10px] sm:text-[11px] md:text-xs font-sans font-bold text-gray-700">
                     <span>Cognitive Focus & Memory</span>
                     <span className="text-[var(--color-navy)]">+13.5%</span>
                   </div>
@@ -284,7 +288,7 @@ export const Hero: React.FC = () => {
                 </div>
 
                 <div>
-                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                  <div className="flex justify-between items-center text-[10px] sm:text-[11px] md:text-xs font-sans font-bold text-gray-700">
                     <span>Restful Sleep Depth</span>
                     <span className="text-[var(--color-navy)]">+15.2%</span>
                   </div>
@@ -299,7 +303,7 @@ export const Hero: React.FC = () => {
                 </div>
               </div>
 
-              <div className="text-center text-[9px] font-sans text-gray-500">
+              <div className="text-center text-[9px] sm:text-[10px] md:text-xs font-sans text-gray-500">
                 *Based on randomized double-blind placebo-controlled clinical trials.
               </div>
             </div>
@@ -340,7 +344,7 @@ export const Hero: React.FC = () => {
 
             
       {/* Main Grid Content */}
-      <div className="w-full max-w-[var(--max-width)] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+      <div className="w-full max-w-[var(--max-width)] mx-auto px-4 min-[400px]:px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
         <div className="order-2 lg:order-1 lg:col-span-6 flex flex-col items-start gap-4.5 text-left py-5 md:py-6.5 px-6 md:px-8 rounded-3xl liquid-glass-card max-w-xl">
           
@@ -415,7 +419,7 @@ export const Hero: React.FC = () => {
 
         {/* RIGHT COLUMN: Interactive Product Carousel */}
         <div className="group order-1 lg:order-2 lg:col-span-6 flex justify-center lg:justify-end items-center relative py-8 lg:py-0 z-10">
-          <div className="relative w-full max-w-[360px] md:w-[500px] h-[400px] md:h-auto md:aspect-square flex items-center justify-center overflow-visible">
+          <div className="relative w-full max-w-[460px] md:max-w-[500px] h-[460px] min-[380px]:h-[480px] md:h-auto md:aspect-square flex items-center justify-center overflow-visible">
             
             {/* Carousel Container (Static on hover, parallax on scroll) */}
             <motion.div
