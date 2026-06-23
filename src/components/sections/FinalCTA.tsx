@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, ShoppingCart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '../ui/Button';
 
@@ -46,7 +46,8 @@ export const FinalCTA: React.FC = () => {
           </p>
 
           <Link to="/" className="pt-2 w-full sm:w-auto">
-            <Button variant="primary" className="w-full sm:w-auto py-3.5 px-9 gap-2">
+            <Button variant="primary" className="w-full sm:w-auto py-3.5 px-9 gap-2.5">
+              <ShoppingCart className="w-4 h-4" />
               order your bottle
               <ArrowRight className="w-4 h-4" />
             </Button>

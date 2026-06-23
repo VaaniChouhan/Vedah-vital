@@ -4,6 +4,7 @@ import { AnimatedSection } from '../ui/AnimatedSection';
 import ShieldCheck from '../ui/icons/shield-check';
 import RosetteDiscountCheckIcon from '../ui/icons/rosette-discount-check-icon';
 import type { AnimatedIconProps } from '../ui/icons/types';
+import { PurityIllustration } from '../ui/PurityIllustration';
 
 export const PurityStandards: React.FC = () => {
   const standards = [
@@ -27,55 +28,62 @@ export const PurityStandards: React.FC = () => {
   return (
     <section className="bg-gradient-to-r from-[rgba(10, 25, 47,0.22)] via-[rgba(10, 25, 47,0.06)] to-white text-[var(--color-text)] py-20 md:py-28 relative overflow-hidden border-b border-[rgba(10, 25, 47,0.15)]">
             
-      <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div className="max-w-[var(--max-width)] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         
-        {/* LEFT COLUMN: Narrative text (replicates history of creation left side) */}
-        <div className="lg:col-span-6 flex flex-col items-start gap-6 text-left">
-          <span className="eyebrow text-[var(--color-navy)]">OUR TRADITION</span>
-          
-          <h2 className="heading-condensed text-4xl md:text-5xl text-[var(--color-heading)] tracking-wide">
-            history of purity
-          </h2>
+        {/* LEFT COLUMN: Narrative text & Value points */}
+        <div className="lg:col-span-7 flex flex-col gap-10 text-left">
+          <div className="flex flex-col items-start gap-6">
+            <span className="eyebrow text-[var(--color-navy)]">OUR TRADITION</span>
+            
+            <h2 className="heading-condensed text-4xl md:text-5xl text-[var(--color-heading)] tracking-wide">
+              history of purity
+            </h2>
 
-          <div className="font-sans text-sm md:text-[0.95rem] font-light leading-relaxed flex flex-col gap-4">
-            <p>
-              In Sanskrit, Ayurveda represents "The Science of Life". For thousands of years, adaptogenic roots were prepared with reverent precision to restore natural vitality.
-            </p>
-            <p className="font-semibold text-[var(--color-heading)]">
-              At Vedah Vital, we preserve this botanical wisdom while validating it with modern high-performance analytical chemistry.
-            </p>
-            <p>
-              We believe in absolute label integrity. By screening every batch in ISO-certified laboratories and printing batch codes on every bottle, we provide standard testing verification directly to your hands.
-            </p>
+            <div className="font-sans text-sm md:text-[0.95rem] font-light leading-relaxed flex flex-col gap-4 max-w-xl">
+              <p>
+                In Sanskrit, Ayurveda represents "The Science of Life". For thousands of years, adaptogenic roots were prepared with reverent precision to restore natural vitality.
+              </p>
+              <p className="font-semibold text-[var(--color-heading)]">
+                At Vedah Vital, we preserve this botanical wisdom while validating it with modern high-performance analytical chemistry.
+              </p>
+              <p>
+                We believe in absolute label integrity. By screening every batch in ISO-certified laboratories and printing batch codes on every bottle, we provide standard testing verification directly to your hands.
+              </p>
+            </div>
+          </div>
+
+          {/* Value points with claymorphic circle icons */}
+          <div className="flex flex-col gap-6">
+            {standards.map((std, idx) => {
+              const Icon = std.icon;
+              return (
+                <AnimatedSection
+                  key={std.title}
+                  delay={idx * 0.1}
+                  className="flex items-start gap-5 group"
+                >
+                  {/* Claymorphic Circle Icon Frame */}
+                  <div className="w-12 h-12 flex items-center justify-center text-[var(--color-navy)] shrink-0 shadow-sm clay-circle-navy transition-all duration-300 group-hover:scale-105">
+                    <Icon size={20} color="var(--color-navy)" className="transition-transform duration-300" />
+                  </div>
+
+                  <div className="flex flex-col gap-1 text-left">
+                    <h3 className="font-sans text-sm font-bold uppercase tracking-wider text-[var(--color-heading)]">
+                      {std.title}
+                    </h3>
+                    <p className="font-sans text-xs md:text-sm text-[var(--color-text)] opacity-80 font-light leading-relaxed max-w-md">
+                      {std.description}
+                    </p>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
         </div>
 
-        {/* RIGHT COLUMN: Value points with claymorphic circle icons */}
-        <div className="lg:col-span-6 flex flex-col gap-8">
-          {standards.map((std, idx) => {
-            const Icon = std.icon;
-            return (
-              <AnimatedSection
-                key={std.title}
-                delay={idx * 0.1}
-                className="flex items-start gap-5 group"
-              >
-                {/* Claymorphic Circle Icon Frame */}
-                <div className="w-12 h-12 flex items-center justify-center text-[var(--color-navy)] shrink-0 shadow-sm clay-circle-navy transition-all duration-300 group-hover:scale-105">
-                  <Icon size={20} color="var(--color-navy)" className="transition-transform duration-300" />
-                </div>
-
-                <div className="flex flex-col gap-1 text-left">
-                  <h3 className="font-sans text-sm font-bold uppercase tracking-wider text-[var(--color-heading)]">
-                    {std.title}
-                  </h3>
-                  <p className="font-sans text-xs md:text-sm text-[var(--color-text)] opacity-80 font-light leading-relaxed max-w-md">
-                    {std.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            );
-          })}
+        {/* RIGHT COLUMN: Premium Animated Laboratory Illustration */}
+        <div className="lg:col-span-5 flex justify-center items-center py-6 w-full">
+          <PurityIllustration />
         </div>
 
       </div>

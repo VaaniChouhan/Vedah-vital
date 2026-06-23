@@ -44,7 +44,7 @@ export const IngredientInfographic: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[500px] aspect-[4/3.8] flex flex-col gap-4 p-5 md:p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl relative">
+    <div className="w-full max-w-[500px] min-h-[500px] md:min-h-[530px] flex flex-col gap-4 p-5 md:p-6 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-2xl relative">
       
       {/* Decorative background grid lines */}
       <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 opacity-[0.03] pointer-events-none">
@@ -61,55 +61,70 @@ export const IngredientInfographic: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col p-4 rounded-2xl bg-white/5 border border-white/10 items-center text-center justify-between min-h-[180px] relative"
+          className="flex flex-col p-4 rounded-2xl bg-white/5 border border-white/10 items-center text-center justify-between min-h-[220px] relative"
         >
-          <span className="text-[9px] font-sans font-bold tracking-[0.18em] text-white/60 uppercase">1. THE SOURCE</span>
+          <span className="text-[9px] font-sans font-bold tracking-[0.18em] text-[#8FB3FF] uppercase">1. THE SOURCE</span>
           
-          <div className="w-full h-24 flex items-center justify-center relative">
-            {/* Elegant, organic, recognizable plant SVG */}
-            <svg className="w-32 h-full text-white" viewBox="0 0 100 80" fill="none">
-              {/* Leaves (Upper Plant) - Faded white outline with low opacity fill */}
-              <g className="opacity-45">
+          <div className="w-full h-32 flex items-center justify-center relative">
+            {/* Elegant, organic, recognizable plant SVG with gradient coloring */}
+            <svg className="w-36 h-full" viewBox="0 0 100 80" fill="none">
+              <defs>
+                <linearGradient id="plantLeafGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#8FB3FF" />
+                  <stop offset="100%" stopColor="#5A7FA8" />
+                </linearGradient>
+                <linearGradient id="plantRootGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#FFE296" />
+                  <stop offset="100%" stopColor="#D9A05B" />
+                </linearGradient>
+              </defs>
+
+              {/* Leaves (Upper Plant) - Faded white outline with blue opacity fill */}
+              <motion.g 
+                animate={{ rotate: [-1, 1, -1] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                className="origin-[50px_45px]"
+              >
                 {/* Center stem link */}
-                <path d="M50,15 L50,45" stroke="currentColor" strokeWidth="2.0" strokeLinecap="round" />
+                <path d="M50,15 L50,45" stroke="url(#plantLeafGrad)" strokeWidth="2.0" strokeLinecap="round" />
                 
                 {/* Top Leaf */}
-                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" fill="currentColor" opacity="0.15" />
-                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
+                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
                 
                 {/* Left Leaf 1 */}
-                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" fill="currentColor" opacity="0.15" />
-                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
+                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
                 
                 {/* Right Leaf 1 */}
-                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" fill="currentColor" opacity="0.15" />
-                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
+                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
 
                 {/* Left Leaf 2 */}
-                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" fill="currentColor" opacity="0.15" />
-                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" stroke="currentColor" strokeWidth="1.6" />
+                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
+                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
 
                 {/* Right Leaf 2 */}
-                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" fill="currentColor" opacity="0.15" />
-                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" stroke="currentColor" strokeWidth="1.6" />
-              </g>
+                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
+                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
+              </motion.g>
 
-              {/* Roots (Underground) - Solid glowing white */}
-              <g className="text-white">
-                <path d="M50,45 C50,55 45,63 40,74" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M50,45 C52,57 58,65 64,72" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M49,52 C42,57 34,61 26,60" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                <path d="M51,55 C58,61 68,62 76,59" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                <path d="M46,62 C38,66 32,66 26,64" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M54,64 C62,68 68,68 74,66" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              {/* Roots (Underground) - Glowing Gold Gradient */}
+              <g>
+                <path d="M50,45 C50,55 45,63 40,74" stroke="url(#plantRootGrad)" strokeWidth="2.8" strokeLinecap="round" />
+                <path d="M50,45 C52,57 58,65 64,72" stroke="url(#plantRootGrad)" strokeWidth="2.8" strokeLinecap="round" />
+                <path d="M49,52 C42,57 34,61 26,60" stroke="url(#plantRootGrad)" strokeWidth="2.0" strokeLinecap="round" />
+                <path d="M51,55 C58,61 68,62 76,59" stroke="url(#plantRootGrad)" strokeWidth="2.0" strokeLinecap="round" />
+                <path d="M46,62 C38,66 32,66 26,64" stroke="url(#plantRootGrad)" strokeWidth="1.5" strokeLinecap="round" />
+                <path d="M54,64 C62,68 68,68 74,66" stroke="url(#plantRootGrad)" strokeWidth="1.5" strokeLinecap="round" />
               </g>
 
               {/* Nutrient pulses rising from root */}
               <motion.circle
                 cx={26}
                 cy={60}
-                r="1.5"
-                fill="#FFF"
+                r="2"
+                fill="#FFE296"
                 animate={{
                   cx: [26, 49, 50],
                   cy: [60, 52, 45],
@@ -120,8 +135,8 @@ export const IngredientInfographic: React.FC = () => {
               <motion.circle
                 cx={76}
                 cy={59}
-                r="1.5"
-                fill="#FFF"
+                r="2"
+                fill="#8FB3FF"
                 animate={{
                   cx: [76, 51, 50],
                   cy: [59, 55, 45],
@@ -132,7 +147,7 @@ export const IngredientInfographic: React.FC = () => {
               <motion.circle
                 cx={40}
                 cy={74}
-                r="2"
+                r="2.5"
                 fill="#FFF"
                 animate={{
                   cx: [40, 50],
@@ -145,10 +160,10 @@ export const IngredientInfographic: React.FC = () => {
           </div>
 
           {/* Absolute labels placed cleanly at outer card edges */}
-          <div className="absolute top-10 right-4 bg-white/10 text-white/80 border border-white/20 rounded-full px-2 py-0.5 text-[7px] font-sans font-bold uppercase tracking-wider">
+          <div className="absolute top-10 right-3 bg-white/10 text-white/80 border border-white/20 rounded-full px-2 py-0.5 text-[7px] font-sans font-bold uppercase tracking-wider">
             LEAVES DISCARDED
           </div>
-          <div className="absolute bottom-14 left-4 bg-white/95 text-[var(--color-navy-deep)] rounded-full px-2 py-0.5 text-[7px] font-sans font-bold shadow-md uppercase tracking-wider">
+          <div className="absolute bottom-14 left-3 bg-[#FFE296] text-[var(--color-navy-deep)] rounded-full px-2 py-0.5 text-[7px] font-sans font-bold shadow-md uppercase tracking-wider">
             ROOT ONLY
           </div>
           
@@ -164,49 +179,57 @@ export const IngredientInfographic: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className="flex flex-col p-4 rounded-2xl bg-white/5 border border-white/10 items-center text-center justify-between min-h-[180px] relative"
+          className="flex flex-col p-4 rounded-2xl bg-white/5 border border-white/10 items-center text-center justify-between min-h-[220px] relative"
         >
-          <span className="text-[9px] font-sans font-bold tracking-[0.18em] text-white/60 uppercase">2. THE STRENGTH</span>
+          <span className="text-[9px] font-sans font-bold tracking-[0.18em] text-[#FFE296] uppercase">2. THE STRENGTH</span>
           
-          <div className="w-full h-24 flex items-center justify-center relative">
+          <div className="w-full h-32 flex items-center justify-center relative">
+            <defs>
+              <linearGradient id="dialGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#8FB3FF" />
+                <stop offset="50%" stopColor="#FFE296" />
+                <stop offset="100%" stopColor="#F5B041" />
+              </linearGradient>
+            </defs>
+
             {/* Larger Standardized Strength Progress Ring */}
-            <svg className="w-24 h-24 transform -rotate-90">
+            <svg className="w-28 h-28 transform -rotate-90">
               <circle
-                cx="48"
-                cy="48"
-                r="38"
-                stroke="rgba(255,255,255,0.12)"
-                strokeWidth="4.5"
+                cx="56"
+                cy="56"
+                r="45"
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="5.5"
                 fill="transparent"
               />
               <motion.circle
-                cx="48"
-                cy="48"
-                r="38"
-                stroke="white"
-                strokeWidth="4.5"
+                cx="56"
+                cy="56"
+                r="45"
+                stroke="url(#dialGrad)"
+                strokeWidth="5.5"
                 fill="transparent"
-                strokeDasharray={238.8}
-                initial={{ strokeDashoffset: 238.8 }}
-                animate={{ strokeDashoffset: 238.8 - (238.8 * 0.75) }}
+                strokeDasharray={282.7}
+                initial={{ strokeDashoffset: 282.7 }}
+                animate={{ strokeDashoffset: 282.7 - (282.7 * 0.75) }}
                 transition={{ duration: 1.8, ease: "easeOut" }}
                 strokeLinecap="round"
               />
             </svg>
             
-            {/* Center Dial Value - Centered exactly using absolute positioning */}
+            {/* Center Dial Value */}
             <div className="absolute flex flex-col items-center justify-center">
-              <span className="text-base font-condensed tracking-wide text-white font-bold leading-none">
+              <span className="text-xl font-condensed tracking-wide text-white font-bold leading-none filter drop-shadow-[0_2px_4px_rgba(255,226,150,0.25)]">
                 {strengthCount.toFixed(1)}%
               </span>
-              <span className="text-[7px] font-sans tracking-widest text-white/60 uppercase leading-none mt-0.5">
-                ACTIVE
+              <span className="text-[7.5px] font-sans tracking-widest text-[#FFE296] font-semibold uppercase leading-none mt-1">
+                WITHANOLIDES
               </span>
             </div>
           </div>
 
           {/* Absolute label placed cleanly at top right */}
-          <div className="absolute top-10 right-4 bg-white/10 border border-white/20 rounded-full px-2 py-0.5 text-[7px] font-sans font-semibold text-white uppercase tracking-wider">
+          <div className="absolute top-10 right-3 bg-white/10 border border-white/20 rounded-full px-2 py-0.5 text-[7px] font-sans font-semibold text-white uppercase tracking-wider">
             LAB CERTIFIED
           </div>
 
@@ -224,41 +247,69 @@ export const IngredientInfographic: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="flex flex-col p-4 rounded-2xl bg-white/5 border border-white/10 justify-between items-stretch min-h-[140px]"
+        className="flex flex-col p-4 rounded-2xl bg-white/5 border border-white/10 justify-between items-stretch min-h-[160px] mt-4"
       >
         <div className="flex justify-between items-center w-full">
-          <span className="text-[9px] font-sans font-bold tracking-[0.18em] text-white/60 uppercase">3. THE ABSORPTION</span>
-          <span className="text-[10px] font-sans font-bold text-white uppercase bg-white/10 px-2 py-0.5 rounded-full">
+          <span className="text-[9px] font-sans font-bold tracking-[0.18em] text-[#8FB3FF] uppercase">3. THE ABSORPTION SYNERGY</span>
+          <span className="text-[10px] font-sans font-bold text-[#FFE296] uppercase bg-white/10 px-2.5 py-0.5 rounded-full">
             +{absorptionCount}% FASTER
           </span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center py-2">
           
-          {/* Visual pill icon showing absorption */}
-          <div className="md:col-span-5 h-14 flex items-center justify-center relative bg-white/5 rounded-xl border border-white/5 overflow-hidden">
-            <div className="flex items-center gap-1.5 relative">
-              {/* Standard capsule outline */}
-              <div className="w-10 h-5 border border-white/30 rounded-full relative flex items-center justify-center overflow-hidden">
-                {/* Filling progress */}
-                <motion.div
-                  initial={{ width: "30%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-                  className="h-full bg-white/20 absolute left-0"
-                />
-                <span className="text-[6px] font-sans font-bold text-white/80 z-10 tracking-[0.05em] uppercase">ABSORB</span>
-              </div>
-              
-              {/* Absorption spark pulses */}
-              <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="text-white text-xs font-sans font-bold"
+          {/* Visual animated capsule illustration */}
+          <div className="md:col-span-5 h-20 flex items-center justify-center relative bg-white/5 rounded-xl border border-white/5 overflow-hidden">
+            
+            <svg viewBox="0 0 160 50" className="w-full h-12" fill="none">
+              <defs>
+                <linearGradient id="capsuleNavy" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#1B365D" />
+                  <stop offset="100%" stopColor="#0D1B2A" />
+                </linearGradient>
+                <linearGradient id="capsuleGold" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#FFE296" stopOpacity="0.85" />
+                  <stop offset="100%" stopColor="#F5B041" stopOpacity="0.25" />
+                </linearGradient>
+              </defs>
+
+              {/* Left Cap (Navy) - represents Ashwagandha */}
+              <motion.g
+                animate={{ x: [-2, 2, -2] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                ✦
-              </motion.div>
-            </div>
+                <rect x="25" y="12" width="28" height="20" rx="10" fill="url(#capsuleNavy)" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+                <text x="31" y="24" fill="rgba(255,255,255,0.6)" fontSize="6" fontFamily="sans-serif" fontWeight="bold">KSM</text>
+              </motion.g>
+
+              {/* Right Cap (Clear Gold) - represents Piperine absorption catalyst */}
+              <motion.g
+                animate={{ x: [2, -2, 2] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <rect x="55" y="12" width="28" height="20" rx="10" fill="url(#capsuleGold)" stroke="#FFE296" strokeWidth="1.5" />
+                
+                {/* Small floating molecular particles inside clear capsule */}
+                <motion.circle cx="62" cy="18" r="1.5" fill="#FFE296" animate={{ y: [0, 4, 0], x: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity }} />
+                <motion.circle cx="72" cy="22" r="1.2" fill="#8FB3FF" animate={{ y: [0, -3, 0], x: [0, -1, 0] }} transition={{ duration: 2.2, repeat: Infinity, delay: 0.3 }} />
+                <motion.circle cx="68" cy="26" r="1.5" fill="#FFF" animate={{ y: [0, -4, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: 0.6 }} />
+                <text x="64" y="24" fill="#FFE296" fontSize="5" fontFamily="sans-serif" fontWeight="bold">95%</text>
+              </motion.g>
+
+              {/* Center Synergy Sparkle */}
+              <motion.g
+                animate={{ scale: [0.8, 1.4, 0.8], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <path d="M54,6 L54,22 M46,14 L62,14" stroke="#FFE296" strokeWidth="1.5" strokeLinecap="round" />
+                <circle cx="54" cy="14" r="3.5" fill="#FFF" className="blur-[0.5px]" opacity="0.8" />
+              </motion.g>
+            </svg>
+
+            {/* Glowing caption */}
+            <span className="absolute bottom-1 text-[7px] font-sans font-bold text-white/55 tracking-widest uppercase">
+              active bonding
+            </span>
           </div>
 
           {/* Simple side-by-side comparison bars */}
@@ -287,7 +338,7 @@ export const IngredientInfographic: React.FC = () => {
                   whileInView={{ width: "100%" }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.8, ease: "easeOut", delay: 0.3 }}
-                  className="h-full bg-white rounded-full"
+                  className="h-full bg-gradient-to-r from-[#8FB3FF] to-[#FFE296] rounded-full"
                 />
               </div>
             </div>
@@ -296,7 +347,7 @@ export const IngredientInfographic: React.FC = () => {
 
         </div>
 
-        <div className="flex justify-between items-center w-full">
+        <div className="flex justify-between items-center w-full border-t border-white/5 pt-2 mt-1">
           <span className="text-[11px] font-sans font-bold tracking-wide text-white uppercase">Optimal Bioavailability</span>
           <span className="text-[9px] font-sans text-white/70">With 5mg Black Pepper absorption catalyst</span>
         </div>
