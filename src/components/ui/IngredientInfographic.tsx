@@ -77,84 +77,168 @@ export const IngredientInfographic: React.FC = () => {
                   <stop offset="0%" stopColor="#FFE296" />
                   <stop offset="100%" stopColor="#D9A05B" />
                 </linearGradient>
+                <linearGradient id="extractField" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#FFE296" stopOpacity="0.0" />
+                  <stop offset="50%" stopColor="#FFE296" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#8FB3FF" stopOpacity="0.4" />
+                </linearGradient>
               </defs>
 
-              {/* Leaves (Upper Plant) - Faded white outline with blue opacity fill */}
+              {/* Soil Line */}
+              <line x1="10" y1="45" x2="90" y2="45" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+              {/* Soil crumbs */}
+              <circle cx="20" cy="48" r="1" fill="rgba(255,255,255,0.3)" />
+              <circle cx="45" cy="47" r="0.8" fill="rgba(255,255,255,0.3)" />
+              <circle cx="78" cy="48" r="1" fill="rgba(255,255,255,0.3)" />
+
+              {/* Leaves (Upper Plant) - Faded blue outline with low opacity fill */}
               <motion.g 
                 animate={{ rotate: [-1, 1, -1] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
                 className="origin-[50px_45px]"
               >
-                {/* Center stem link */}
+                {/* Center stem */}
                 <path d="M50,15 L50,45" stroke="url(#plantLeafGrad)" strokeWidth="2.0" strokeLinecap="round" />
                 
                 {/* Top Leaf */}
                 <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
-                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
+                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
                 
                 {/* Left Leaf 1 */}
                 <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
-                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
+                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
                 
                 {/* Right Leaf 1 */}
                 <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
-                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
+                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
 
                 {/* Left Leaf 2 */}
                 <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
-                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
+                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
 
                 {/* Right Leaf 2 */}
                 <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
-                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.8" />
+                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
               </motion.g>
 
-              {/* Roots (Underground) - Glowing Gold Gradient */}
-              <g>
-                <path d="M50,45 C50,55 45,63 40,74" stroke="url(#plantRootGrad)" strokeWidth="2.8" strokeLinecap="round" />
-                <path d="M50,45 C52,57 58,65 64,72" stroke="url(#plantRootGrad)" strokeWidth="2.8" strokeLinecap="round" />
-                <path d="M49,52 C42,57 34,61 26,60" stroke="url(#plantRootGrad)" strokeWidth="2.0" strokeLinecap="round" />
-                <path d="M51,55 C58,61 68,62 76,59" stroke="url(#plantRootGrad)" strokeWidth="2.0" strokeLinecap="round" />
-                <path d="M46,62 C38,66 32,66 26,64" stroke="url(#plantRootGrad)" strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M54,64 C62,68 68,68 74,66" stroke="url(#plantRootGrad)" strokeWidth="1.5" strokeLinecap="round" />
+              {/* Extraction Vapor/Glow Field surrounding the roots */}
+              <motion.path
+                d="M 20,78 Q 50,60 80,78"
+                stroke="url(#extractField)"
+                strokeWidth="12"
+                strokeLinecap="round"
+                opacity="0.3"
+                animate={{ opacity: [0.1, 0.4, 0.1], strokeWidth: [8, 14, 8] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+
+              {/* Highly Detailed Tuberous Roots - Tapered paths with details */}
+              <g className="filter drop-shadow-[0_2px_4px_rgba(217,160,91,0.2)]">
+                {/* Main tuber body */}
+                <path
+                  d="M45,45 C45,55 42,64 45,74 C47,76 49,76 50,74 C52,64 53,55 52,45 Z"
+                  fill="url(#plantRootGrad)"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                />
+                
+                {/* Main tuber vertical wrinkles */}
+                <path d="M47,48 C46,55 45,62 47,70" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" />
+                <path d="M49,50 C48,58 48,65 49,72" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" />
+
+                {/* Left side branching tuber */}
+                <path
+                  d="M45,51 C37,54 32,58 26,60 C25,60 25,62 26,62 C34,60 40,56 45,54 Z"
+                  fill="url(#plantRootGrad)"
+                  stroke="currentColor"
+                  strokeWidth="1.0"
+                />
+
+                {/* Right side branching tuber */}
+                <path
+                  d="M51,54 C60,56 66,61 74,62 C75,62 75,60 74,60 C66,59 60,54 51,52 Z"
+                  fill="url(#plantRootGrad)"
+                  stroke="currentColor"
+                  strokeWidth="1.0"
+                />
+
+                {/* Fibrous rootlet hairs (Thin lateral extensions) */}
+                {/* Main bottom fibers */}
+                <path d="M47,74 Q46,79 43,84" stroke="url(#plantRootGrad)" strokeWidth="0.8" strokeLinecap="round" />
+                <path d="M48,74 Q51,80 54,85" stroke="url(#plantRootGrad)" strokeWidth="0.8" strokeLinecap="round" />
+                <path d="M48,77 Q48,82 48,87" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" />
+                {/* Left fibers */}
+                <path d="M26,61 Q21,63 18,67" stroke="url(#plantRootGrad)" strokeWidth="0.7" strokeLinecap="round" />
+                <path d="M29,60 Q26,65 24,70" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" />
+                {/* Right fibers */}
+                <path d="M74,61 Q79,63 82,67" stroke="url(#plantRootGrad)" strokeWidth="0.7" strokeLinecap="round" />
+                <path d="M71,61 Q73,66 74,71" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" />
               </g>
 
-              {/* Nutrient pulses rising from root */}
+              {/* Extraction/Diffusion Animation: particles escaping roots and floating into beaker */}
+              
+              {/* Withanolides escaping left branch */}
               <motion.circle
-                cx={26}
+                r="1.8"
+                fill="#FFE296"
+                animate={{
+                  cx: [32, 22, 12],
+                  cy: [59, 62, 55],
+                  opacity: [0, 1, 1, 0],
+                  scale: [0.6, 1.2, 0.5]
+                }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 0.2 }}
+              />
+
+              {/* Withanolides escaping right branch */}
+              <motion.circle
+                r="1.8"
+                fill="#FFE296"
+                animate={{
+                  cx: [66, 76, 86],
+                  cy: [59, 62, 55],
+                  opacity: [0, 1, 1, 0],
+                  scale: [0.6, 1.2, 0.5]
+                }}
+                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 0.8 }}
+              />
+
+              {/* Concentrating into upward active pulses */}
+              <motion.circle
+                cx={48}
+                cy={70}
+                r="2.5"
+                fill="#FFF"
+                animate={{
+                  cx: [48, 50, 50],
+                  cy: [70, 45, 18],
+                  opacity: [0, 1, 0.8, 0]
+                }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              />
+              <motion.circle
+                cx={29}
                 cy={60}
                 r="2"
                 fill="#FFE296"
                 animate={{
-                  cx: [26, 49, 50],
-                  cy: [60, 52, 45],
+                  cx: [29, 48, 50],
+                  cy: [60, 51, 45],
                   opacity: [0, 1, 0]
                 }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
               />
               <motion.circle
-                cx={76}
-                cy={59}
+                cx={68}
+                cy={60}
                 r="2"
                 fill="#8FB3FF"
                 animate={{
-                  cx: [76, 51, 50],
-                  cy: [59, 55, 45],
+                  cx: [68, 52, 50],
+                  cy: [60, 53, 45],
                   opacity: [0, 1, 0]
                 }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
-              />
-              <motion.circle
-                cx={40}
-                cy={74}
-                r="2.5"
-                fill="#FFF"
-                animate={{
-                  cx: [40, 50],
-                  cy: [74, 45],
-                  opacity: [0, 1, 0]
-                }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut", delay: 0.2 }}
+                transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 1.1 }}
               />
             </svg>
           </div>
