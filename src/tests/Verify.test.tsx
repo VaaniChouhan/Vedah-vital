@@ -30,7 +30,7 @@ describe('Verify page', () => {
     renderVerify();
     const input = screen.getByPlaceholderText('e.g. VV-ASH-2026-001');
     fireEvent.change(input, { target: { value: 'VV-FAKE-9999-999' } });
-    const btn = screen.getByRole('button', { name: /verify/i });
+    const btn = screen.getAllByRole('button', { name: /verify/i }).find(el => el.getAttribute('type') === 'submit')!;
     fireEvent.click(btn);
     await waitFor(() =>
       expect(screen.getByText(/batch code not found/i)).toBeInTheDocument(),
@@ -42,7 +42,7 @@ describe('Verify page', () => {
     renderVerify();
     const input = screen.getByPlaceholderText('e.g. VV-ASH-2026-001');
     fireEvent.change(input, { target: { value: 'VV-ASH-2026-001' } });
-    const btn = screen.getByRole('button', { name: /verify/i });
+    const btn = screen.getAllByRole('button', { name: /verify/i }).find(el => el.getAttribute('type') === 'submit')!;
     fireEvent.click(btn);
     await waitFor(() =>
       expect(screen.getByText(/certificate of analysis/i)).toBeInTheDocument(),

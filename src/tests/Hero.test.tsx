@@ -1,4 +1,4 @@
-﻿import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Hero } from '../components/sections/Hero';
 
@@ -6,6 +6,7 @@ vi.mock('framer-motion', async () => {
   const actual = await vi.importActual('framer-motion');
   return {
     ...actual,
+    AnimatePresence: ({ children }: { children: React.ReactNode }) => <>{children}</>,
     useScroll: () => ({ scrollY: { get: () => 0 } }),
     useTransform: (_v: unknown, _i: unknown, o: unknown[]) => o[0],
   };

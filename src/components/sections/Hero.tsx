@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
 
             {/* Isolated product bottle image */}
             <img
-              src="/images/isolated_bottle.png"
+              src="/images/isolated_bottle.webp"
               alt="Vedah Vital Ashwagandha Bottle"
               className="w-[65%] h-auto object-contain select-none filter drop-shadow-[0_30px_45px_rgba(10,25,47,0.22)] z-10"
               draggable="false"
@@ -86,7 +86,7 @@ export const Hero: React.FC = () => {
               
               <div className="flex-1 w-full flex items-center justify-center overflow-hidden my-2 sm:my-2.5">
                 <img 
-                  src="/images/supplement_facts.png" 
+                  src="/images/supplement_facts.webp" 
                   alt="Supplement Facts Label" 
                   className="max-w-full max-h-full object-contain rounded-lg filter drop-shadow-md select-none"
                   draggable="false"
@@ -120,7 +120,7 @@ export const Hero: React.FC = () => {
                 <div className="flex flex-row md:flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 sm:p-3 text-left justify-between items-center md:items-stretch">
                   <div className="w-20 h-20 min-[380px]:w-24 min-[380px]:h-24 sm:w-28 sm:h-28 md:w-full md:h-auto md:aspect-[1.15/1] rounded-xl overflow-hidden shadow-inner border border-white bg-white shrink-0">
                     <img 
-                      src="/images/ashwagandha_plant_root.png" 
+                      src="/images/ashwagandha_plant_root.webp" 
                       alt="Ashwagandha Plant & Root" 
                       className="w-full h-full object-cover select-none"
                       draggable="false"
@@ -141,7 +141,7 @@ export const Hero: React.FC = () => {
                 <div className="flex flex-row md:flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 sm:p-3 text-left justify-between items-center md:items-stretch">
                   <div className="w-20 h-20 min-[380px]:w-24 min-[380px]:h-24 sm:w-28 sm:h-28 md:w-full md:h-auto md:aspect-[1.15/1] rounded-xl overflow-hidden shadow-inner border border-white bg-white shrink-0">
                     <img 
-                      src="/images/black_peppercorns.png" 
+                      src="/images/black_peppercorns.webp" 
                       alt="Black Peppercorns" 
                       className="w-full h-full object-cover select-none"
                       draggable="false"
@@ -340,7 +340,7 @@ export const Hero: React.FC = () => {
         className="absolute inset-0 w-full h-full pointer-events-none z-0"
       >
         <img 
-          src="/images/hero-bg.png?v=4" 
+          src="/images/hero-bg.webp?v=4" 
           alt="Natural Stone Backdrop" 
           className="w-full h-full object-cover opacity-100 select-none"
           draggable="false"
@@ -374,10 +374,10 @@ export const Hero: React.FC = () => {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="flex flex-col"
           >
-            <h1 className="heading-condensed text-6xl md:text-8xl text-[var(--color-heading)] tracking-wide">
+            <h1 className="heading-condensed text-5xl min-[400px]:text-6xl md:text-7xl lg:text-6xl xl:text-8xl text-[var(--color-heading)] tracking-wide">
               ashwagandha
             </h1>
-            <h2 className="heading-condensed text-4xl md:text-6xl text-[var(--color-navy)] tracking-wide -mt-2">
+            <h2 className="heading-condensed text-3xl min-[400px]:text-4xl md:text-5xl lg:text-4xl xl:text-6xl text-[var(--color-navy)] tracking-wide -mt-2">
               zero compromise
             </h2>
             <span className="font-sans font-bold text-[10px] tracking-[0.18em] text-[var(--color-heading)] opacity-80 uppercase mt-2">

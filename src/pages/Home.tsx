@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
         />
         <meta property="og:title" content="Vedah Vital — Premium Organic Ashwagandha KSM-66" />
         <meta property="og:description" content="Discover natural cortisol balance, stress-relief, and deep sleep support backed by standard laboratory transparency." />
-        <meta property="og:image" content="/images/hero-image.png" />
+        <meta property="og:image" content="/images/hero-image.webp" />
       </Helmet>
 
       <Navbar />
