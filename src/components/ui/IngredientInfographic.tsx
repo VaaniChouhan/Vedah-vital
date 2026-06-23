@@ -1,6 +1,81 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
+
+// Detailed representation of a Withanolide chemical skeleton structure
+interface MoleculeProps {
+  delay: number;
+  startX: number;
+  startY: number;
+  endX: number;
+  endY: number;
+  duration: number;
+}
+
+const WithanolideMolecule: React.FC<MoleculeProps> = ({ delay, startX, startY, endX, endY, duration }) => {
+  return (
+    <motion.g
+      initial={{ x: startX, y: startY, opacity: 0, scale: 0.08, rotate: 0 }}
+      animate={{
+        x: [startX, startX - 8, startX + 8, endX],
+        y: [startY, startY - 35, startY - 70, endY],
+        opacity: [0, 0.9, 0.9, 0],
+        scale: [0.08, 0.16, 0.16, 0.08],
+        rotate: [0, 45, 90, 180]
+      }}
+      transition={{
+        duration: duration,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: delay
+      }}
+    >
+      {/* 3 fused hexagons, 1 pentagon, and lactone ring */}
+      <path
+        d="M 0,5 L 8,0 L 16,5 L 24,0 L 32,5 L 40,0 L 48,5 L 56,3 L 60,10 L 54,17 L 48,15 L 40,20 L 32,15 L 24,20 L 16,15 L 0,15 Z M 16,5 L 16,15 M 32,5 L 32,15 M 48,5 L 48,15 M 16,5 L 16,-1 M 32,5 L 32,-1 M 60,10 L 68,8 L 74,4 L 80,8 L 80,16 L 74,20 L 68,16 Z M 74,20 L 74,25 M 75,20 L 75,25"
+        stroke="#FFE296"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* Glowing atoms at vertices */}
+      <circle cx="8" cy="0" r="1.5" fill="#FFF" className="filter drop-shadow-[0_0_2.5px_#FFE296]" />
+      <circle cx="24" cy="0" r="1.5" fill="#FFF" className="filter drop-shadow-[0_0_2.5px_#FFE296]" />
+      <circle cx="40" cy="0" r="1.5" fill="#FFF" className="filter drop-shadow-[0_0_2.5px_#FFE296]" />
+      <circle cx="74" cy="4" r="1.5" fill="#FFF" className="filter drop-shadow-[0_0_2.5px_#FFE296]" />
+    </motion.g>
+  );
+};
+
+const MicroParticle: React.FC<MoleculeProps> = ({ delay, startX, startY, endX, endY, duration }) => {
+  // Deterministic horizontal offset to remain pure across renders
+  const driftOffset = ((startX * 17 + Math.round(delay * 100)) % 16) - 8;
+
+  return (
+    <motion.circle
+      cx={startX}
+      cy={startY}
+      r="2.2"
+      fill="#FFE296"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{
+        x: [0, driftOffset, endX - startX],
+        y: [0, -45, endY - startY],
+        opacity: [0, 1, 1, 0],
+        scale: [0.5, 1.3, 0.5]
+      }}
+      transition={{
+        duration: duration,
+        repeat: Infinity,
+        ease: "easeOut",
+        delay: delay
+      }}
+      className="filter drop-shadow-[0_0_3px_#FFE296]"
+    />
+  );
+};
+
 export const IngredientInfographic: React.FC = () => {
   const [strengthCount, setStrengthCount] = useState(0.0);
   const [absorptionCount, setAbsorptionCount] = useState(0);
@@ -67,7 +142,7 @@ export const IngredientInfographic: React.FC = () => {
           
           <div className="w-full h-32 flex items-center justify-center relative">
             {/* Elegant, organic, recognizable plant SVG with gradient coloring */}
-            <svg className="w-36 h-full" viewBox="0 0 100 80" fill="none">
+            <svg className="w-40 h-full" viewBox="0 0 200 160" fill="none">
               <defs>
                 <linearGradient id="plantLeafGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#8FB3FF" />
@@ -77,169 +152,243 @@ export const IngredientInfographic: React.FC = () => {
                   <stop offset="0%" stopColor="#FFE296" />
                   <stop offset="100%" stopColor="#D9A05B" />
                 </linearGradient>
-                <linearGradient id="extractField" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#FFE296" stopOpacity="0.0" />
-                  <stop offset="50%" stopColor="#FFE296" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="#8FB3FF" stopOpacity="0.4" />
+                <linearGradient id="berryGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#FF6B6B" />
+                  <stop offset="100%" stopColor="#D92424" />
                 </linearGradient>
+                <linearGradient id="calyxGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#E2EEF9" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#A3C2F0" stopOpacity="0.4" />
+                </linearGradient>
+                <linearGradient id="soilGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgba(27, 54, 93, 0.35)" />
+                  <stop offset="100%" stopColor="rgba(10, 25, 47, 0.85)" />
+                </linearGradient>
+                <linearGradient id="flaskGlow" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#8FB3FF" stopOpacity="0.4" />
+                  <stop offset="50%" stopColor="#FFE296" stopOpacity="0.1" />
+                  <stop offset="100%" stopColor="#8FB3FF" stopOpacity="0.5" />
+                </linearGradient>
+                <radialGradient id="liquidGrad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#FFE296" stopOpacity="0.25" />
+                  <stop offset="100%" stopColor="#8FB3FF" stopOpacity="0.05" />
+                </radialGradient>
               </defs>
 
-              {/* Soil Line */}
-              <line x1="10" y1="45" x2="90" y2="45" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
-              {/* Soil crumbs */}
-              <circle cx="20" cy="48" r="1" fill="rgba(255,255,255,0.3)" />
-              <circle cx="45" cy="47" r="0.8" fill="rgba(255,255,255,0.3)" />
-              <circle cx="78" cy="48" r="1" fill="rgba(255,255,255,0.3)" />
+              {/* Ground & Soil profile */}
+              <path d="M 10 80 Q 100 76 190 80 L 190 155 L 10 155 Z" fill="url(#soilGrad)" />
+              
+              {/* Soil details */}
+              <path d="M 20 95 Q 80 92 120 98" stroke="rgba(255,255,255,0.06)" strokeWidth="1" fill="none" />
+              <path d="M 70 120 Q 130 115 180 122" stroke="rgba(255,255,255,0.06)" strokeWidth="1" fill="none" />
+              
+              <circle cx="30" cy="95" r="1.2" fill="rgba(217, 160, 91, 0.4)" />
+              <circle cx="170" cy="110" r="1.5" fill="rgba(217, 160, 91, 0.4)" />
+              <circle cx="50" cy="140" r="1" fill="rgba(217, 160, 91, 0.4)" />
+              <circle cx="150" cy="135" r="1.2" fill="rgba(217, 160, 91, 0.4)" />
 
-              {/* Leaves (Upper Plant) - Faded blue outline with low opacity fill */}
-              <motion.g 
-                animate={{ rotate: [-1, 1, -1] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="origin-[50px_45px]"
+              {/* Extraction Liquid Menu (Meniscus) inside the flask base */}
+              <path
+                d="M 75.1 110 Q 100 113 124.9 110 L 155 145 C 158 149 155 152 150 152 L 50 152 C 45 152 42 149 45 145 Z"
+                fill="url(#liquidGrad)"
+              />
+
+              {/* Soil Line overlay */}
+              <line x1="10" y1="80" x2="190" y2="80" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+
+              {/* Leaves & Stem (Upper Plant) - Faded blue outline with low opacity fill */}
+              <motion.g
+                animate={{ rotate: [-1.2, 1.2, -1.2] }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="origin-[100px_80px]"
               >
                 {/* Center stem */}
-                <path d="M50,15 L50,45" stroke="url(#plantLeafGrad)" strokeWidth="2.0" strokeLinecap="round" />
+                <path d="M 99 80 L 99 28 C 99 26 101 26 101 28 L 101 80 Z" fill="url(#plantLeafGrad)" />
                 
-                {/* Top Leaf */}
-                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
-                <path d="M50,15 C42,7 50,0 50,0 C50,0 58,7 50,15 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
+                {/* Leaf 1 (Bottom Left) */}
+                <path d="M 99 65 C 75 60 60 70 48 65 C 65 80 85 75 99 65 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
+                <path d="M 99 65 C 75 60 60 70 48 65 C 65 80 85 75 99 65 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.5" />
+                <path d="M 99 65 Q 73.5 66 48 65" stroke="rgba(143, 179, 255, 0.4)" strokeWidth="1.2" fill="none" />
+                <path d="M 85 65 Q 82 60 79 57" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 70 65 Q 67 60 64 57" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 85 65 Q 83 70 81 73" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 70 65 Q 68 70 66 73" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
                 
-                {/* Left Leaf 1 */}
-                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
-                <path d="M50,23 C34,16 26,23 26,23 C26,23 34,31 50,27 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
-                
-                {/* Right Leaf 1 */}
-                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
-                <path d="M50,25 C66,18 74,25 74,25 C74,25 66,33 50,29 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
+                {/* Leaf 2 (Bottom Right) */}
+                <path d="M 101 60 C 125 55 140 65 152 60 C 135 75 115 70 101 60 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
+                <path d="M 101 60 C 125 55 140 65 152 60 C 135 75 115 70 101 60 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.5" />
+                <path d="M 101 60 Q 126.5 61 152 60" stroke="rgba(143, 179, 255, 0.4)" strokeWidth="1.2" fill="none" />
+                <path d="M 115 60 Q 118 55 121 52" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 130 60 Q 133 55 136 52" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 115 60 Q 117 65 119 68" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 130 60 Q 132 65 134 68" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
 
-                {/* Left Leaf 2 */}
-                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
-                <path d="M50,32 C36,26 28,32 28,32 C28,32 36,40 50,36 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
+                {/* Leaf 3 (Middle Left) */}
+                <path d="M 99 45 C 80 38 70 48 58 40 C 70 55 88 50 99 45 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
+                <path d="M 99 45 C 80 38 70 48 58 40 C 70 55 88 50 99 45 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.5" />
+                <path d="M 99 45 Q 78.5 44 58 40" stroke="rgba(143, 179, 255, 0.4)" strokeWidth="1.2" fill="none" />
+                <path d="M 88 44 Q 85 39 82 37" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 76 43 Q 73 39 70 37" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 88 44 Q 86 48 84 51" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 76 43 Q 74 48 72 51" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
 
-                {/* Right Leaf 2 */}
-                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
-                <path d="M50,34 C64,28 72,34 72,34 C72,34 64,42 50,38 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.6" />
+                {/* Leaf 4 (Middle Right) */}
+                <path d="M 101 40 C 120 33 130 43 142 35 C 130 50 112 45 101 40 Z" fill="url(#plantLeafGrad)" opacity="0.2" />
+                <path d="M 101 40 C 120 33 130 43 142 35 C 130 50 112 45 101 40 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.5" />
+                <path d="M 101 40 Q 121.5 39 142 35" stroke="rgba(143, 179, 255, 0.4)" strokeWidth="1.2" fill="none" />
+                <path d="M 112 40 Q 115 35 118 33" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 124 39 Q 127 35 130 33" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 112 40 Q 114 44 116 47" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 124 39 Q 126 44 128 47" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+
+                {/* Leaf 5 (Top Terminal) */}
+                <path d="M 100 25 C 90 10 100 2 100 2 C 100 2 110 10 100 25 Z" fill="url(#plantLeafGrad)" opacity="0.25" />
+                <path d="M 100 25 C 90 10 100 2 100 2 C 100 2 110 10 100 25 Z" stroke="url(#plantLeafGrad)" strokeWidth="1.5" />
+                <path d="M 100 25 L 100 2" stroke="rgba(143, 179, 255, 0.4)" strokeWidth="1.2" fill="none" />
+                <path d="M 100 20 Q 96 15 94 13" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 100 12 Q 96 8 94 6" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 100 20 Q 104 15 106 13" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+                <path d="M 100 12 Q 104 8 106 6" stroke="rgba(143, 179, 255, 0.3)" strokeWidth="0.8" fill="none" />
+
+                {/* Ashwagandha Berries hanging from Leaf Nodes (Detailed calyxes & red berries) */}
+                
+                {/* Left Berry Cluster */}
+                <path d="M 99 45 Q 94 48 90 52" stroke="url(#plantLeafGrad)" strokeWidth="1" fill="none" />
+                {/* Red Berry inside */}
+                <circle cx="90" cy="58" r="4.2" fill="url(#berryGrad)" />
+                {/* Lantern Calyx Envelope */}
+                <path
+                  d="M 90 52 C 84 54 82 60 86 66 C 90 70 94 66 94 60 C 94 54 92 52 90 52 Z"
+                  fill="url(#calyxGrad)"
+                  stroke="rgba(255, 226, 150, 0.65)"
+                  strokeWidth="1"
+                  opacity="0.7"
+                />
+                <path d="M 90 52 Q 85 59 86 66" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
+                <path d="M 90 52 Q 95 59 94 66" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
+                <path d="M 90 52 L 90 68" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
+
+                {/* Right Berry Cluster */}
+                <path d="M 101 40 Q 106 44 110 48" stroke="url(#plantLeafGrad)" strokeWidth="1" fill="none" />
+                {/* Red Berry inside */}
+                <circle cx="110" cy="54" r="4.2" fill="url(#berryGrad)" />
+                {/* Lantern Calyx Envelope */}
+                <path
+                  d="M 110 48 C 104 50 102 56 106 62 C 110 66 114 62 114 56 C 114 50 112 48 110 48 Z"
+                  fill="url(#calyxGrad)"
+                  stroke="rgba(255, 226, 150, 0.65)"
+                  strokeWidth="1"
+                  opacity="0.7"
+                />
+                <path d="M 110 48 Q 105 55 106 62" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
+                <path d="M 110 48 Q 115 55 114 62" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
+                <path d="M 110 48 L 110 64" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" fill="none" />
               </motion.g>
 
-              {/* Extraction Vapor/Glow Field surrounding the roots */}
-              <motion.path
-                d="M 20,78 Q 50,60 80,78"
-                stroke="url(#extractField)"
-                strokeWidth="12"
-                strokeLinecap="round"
-                opacity="0.3"
-                animate={{ opacity: [0.1, 0.4, 0.1], strokeWidth: [8, 14, 8] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              {/* Scientific Laboratory Glass Flask outline enclosing roots */}
+              <path
+                d="M 88 75 L 84 75 L 84 71 L 116 71 L 116 75 L 112 75 L 112 95 L 155 145 C 158 149 155 152 150 152 L 50 152 C 45 152 42 149 45 145 L 88 95 Z"
+                stroke="url(#flaskGlow)"
+                strokeWidth="1.2"
+                fill="none"
               />
 
-              {/* Highly Detailed Tuberous Roots - Tapered paths with details */}
+              {/* Fleshy Taproot System (Creamy-tan gnarly Ashwagandha roots) */}
               <g className="filter drop-shadow-[0_2px_4px_rgba(217,160,91,0.2)]">
-                {/* Main tuber body */}
+                {/* Main taproot body */}
                 <path
-                  d="M45,45 C45,55 42,64 45,74 C47,76 49,76 50,74 C52,64 53,55 52,45 Z"
+                  d="M 95 80 C 95 90 92 100 95 112 C 98 122 96 128 100 135 C 104 128 102 122 105 112 C 108 100 105 90 105 80 Z"
                   fill="url(#plantRootGrad)"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
+                  stroke="rgba(10,25,47,0.15)"
+                  strokeWidth="1"
                 />
                 
-                {/* Main tuber vertical wrinkles */}
-                <path d="M47,48 C46,55 45,62 47,70" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" />
-                <path d="M49,50 C48,58 48,65 49,72" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" />
-
-                {/* Left side branching tuber */}
+                {/* Shading highlight path to make roots look 3D cylindrical */}
                 <path
-                  d="M45,51 C37,54 32,58 26,60 C25,60 25,62 26,62 C34,60 40,56 45,54 Z"
-                  fill="url(#plantRootGrad)"
-                  stroke="currentColor"
-                  strokeWidth="1.0"
+                  d="M 96.5 82 C 96.5 90 94.5 100 97.5 112 C 99.5 120 98 126 100 133"
+                  stroke="rgba(255,255,255,0.3)"
+                  strokeWidth="0.8"
+                  strokeLinecap="round"
+                  fill="none"
                 />
 
-                {/* Right side branching tuber */}
+                {/* Horizontal growth striations (tuberous wrinkles) */}
+                <path d="M 95 88 Q 100 90 105 88" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+                <path d="M 94 96 Q 100 98 106 96" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+                <path d="M 96 108 Q 100 110 104 108" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+                <path d="M 97 118 Q 100 120 103 118" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+                <path d="M 98 128 Q 100 130 102 128" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+
+                {/* Thick secondary branch tuber (left) */}
                 <path
-                  d="M51,54 C60,56 66,61 74,62 C75,62 75,60 74,60 C66,59 60,54 51,52 Z"
+                  d="M 94 98 C 84 103 76 108 74 115 C 73 118 75 119 76 117 C 82 112 88 107 95 103 Z"
                   fill="url(#plantRootGrad)"
-                  stroke="currentColor"
-                  strokeWidth="1.0"
+                  stroke="rgba(10,25,47,0.15)"
+                  strokeWidth="0.8"
+                />
+                <path d="M 86 104 Q 88 107 91 106" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+                <path d="M 78 110 Q 80 113 83 112" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+
+                {/* Thick secondary branch tuber (right) */}
+                <path
+                  d="M 106 101 C 115 106 124 112 130 120 C 132 122 133 121 131 119 C 124 112 116 107 106 102 Z"
+                  fill="url(#plantRootGrad)"
+                  stroke="rgba(10,25,47,0.15)"
+                  strokeWidth="0.8"
+                />
+                <path d="M 112 108 Q 114 106 117 109" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+                <path d="M 122 115 Q 124 113 127 116" stroke="rgba(10,25,47,0.18)" strokeWidth="0.8" fill="none" />
+
+                {/* Thick lower branches (bottom) */}
+                <path
+                  d="M 98 122 C 92 128 86 135 80 142 C 78 143 80 145 81 144 C 88 137 94 130 99 125 Z"
+                  fill="url(#plantRootGrad)"
+                  stroke="rgba(10,25,47,0.15)"
+                  strokeWidth="0.6"
+                />
+                <path
+                  d="M 102 125 C 108 130 114 136 120 142 C 122 143 123 141 121 140 C 116 134 110 129 103 124 Z"
+                  fill="url(#plantRootGrad)"
+                  stroke="rgba(10,25,47,0.15)"
+                  strokeWidth="0.6"
                 />
 
-                {/* Fibrous rootlet hairs (Thin lateral extensions) */}
-                {/* Main bottom fibers */}
-                <path d="M47,74 Q46,79 43,84" stroke="url(#plantRootGrad)" strokeWidth="0.8" strokeLinecap="round" />
-                <path d="M48,74 Q51,80 54,85" stroke="url(#plantRootGrad)" strokeWidth="0.8" strokeLinecap="round" />
-                <path d="M48,77 Q48,82 48,87" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" />
-                {/* Left fibers */}
-                <path d="M26,61 Q21,63 18,67" stroke="url(#plantRootGrad)" strokeWidth="0.7" strokeLinecap="round" />
-                <path d="M29,60 Q26,65 24,70" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" />
-                {/* Right fibers */}
-                <path d="M74,61 Q79,63 82,67" stroke="url(#plantRootGrad)" strokeWidth="0.7" strokeLinecap="round" />
-                <path d="M71,61 Q73,66 74,71" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" />
+                {/* Delicate fibrous root hairs tapping into the soil */}
+                <path d="M 74 115 Q 67 118 63 125" stroke="url(#plantRootGrad)" strokeWidth="0.8" strokeLinecap="round" fill="none" />
+                <path d="M 74 115 Q 69 112 65 110" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" fill="none" />
+                
+                <path d="M 130 120 Q 137 123 141 130" stroke="url(#plantRootGrad)" strokeWidth="0.8" strokeLinecap="round" fill="none" />
+                <path d="M 130 120 Q 135 117 139 116" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" fill="none" />
+                
+                <path d="M 80 142 Q 74 148 70 151" stroke="url(#plantRootGrad)" strokeWidth="0.7" strokeLinecap="round" fill="none" />
+                <path d="M 120 142 Q 126 148 130 151" stroke="url(#plantRootGrad)" strokeWidth="0.7" strokeLinecap="round" fill="none" />
+                
+                <path d="M 100 135 Q 99 145 97 153" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" fill="none" />
+                <path d="M 100 135 Q 101 145 103 153" stroke="url(#plantRootGrad)" strokeWidth="0.6" strokeLinecap="round" fill="none" />
               </g>
 
-              {/* Extraction/Diffusion Animation: particles escaping roots and floating into beaker */}
-              
-              {/* Withanolides escaping left branch */}
-              <motion.circle
-                r="1.8"
-                fill="#FFE296"
-                animate={{
-                  cx: [32, 22, 12],
-                  cy: [59, 62, 55],
-                  opacity: [0, 1, 1, 0],
-                  scale: [0.6, 1.2, 0.5]
-                }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 0.2 }}
+              {/* Extraction vapor field inside the neck */}
+              <motion.path
+                d="M 88 95 L 88 75 L 112 75 L 112 95"
+                stroke="url(#plantLeafGrad)"
+                strokeWidth="10"
+                strokeLinecap="round"
+                opacity="0.15"
+                animate={{ opacity: [0.08, 0.22, 0.08], strokeWidth: [6, 12, 6] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              {/* Withanolides escaping right branch */}
-              <motion.circle
-                r="1.8"
-                fill="#FFE296"
-                animate={{
-                  cx: [66, 76, 86],
-                  cy: [59, 62, 55],
-                  opacity: [0, 1, 1, 0],
-                  scale: [0.6, 1.2, 0.5]
-                }}
-                transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 0.8 }}
-              />
+              {/* Highly detailed active chemical compound (Withanolide) animation */}
+              <WithanolideMolecule delay={0.2} startX={74} startY={112} endX={100} endY={30} duration={3.8} />
+              <WithanolideMolecule delay={1.4} startX={130} startY={120} endX={100} endY={20} duration={4.2} />
+              <WithanolideMolecule delay={2.6} startX={100} startY={135} endX={100} endY={10} duration={4.0} />
 
-              {/* Concentrating into upward active pulses */}
-              <motion.circle
-                cx={48}
-                cy={70}
-                r="2.5"
-                fill="#FFF"
-                animate={{
-                  cx: [48, 50, 50],
-                  cy: [70, 45, 18],
-                  opacity: [0, 1, 0.8, 0]
-                }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.circle
-                cx={29}
-                cy={60}
-                r="2"
-                fill="#FFE296"
-                animate={{
-                  cx: [29, 48, 50],
-                  cy: [60, 51, 45],
-                  opacity: [0, 1, 0]
-                }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 0.5 }}
-              />
-              <motion.circle
-                cx={68}
-                cy={60}
-                r="2"
-                fill="#8FB3FF"
-                animate={{
-                  cx: [68, 52, 50],
-                  cy: [60, 53, 45],
-                  opacity: [0, 1, 0]
-                }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut", delay: 1.1 }}
-              />
+              {/* Accompanying micro-particles rising along the flow */}
+              <MicroParticle delay={0.5} startX={74} startY={112} endX={100} endY={40} duration={2.5} />
+              <MicroParticle delay={0.9} startX={130} startY={120} endX={100} endY={35} duration={2.7} />
+              <MicroParticle delay={1.7} startX={100} startY={135} endX={100} endY={25} duration={2.4} />
+              <MicroParticle delay={2.1} startX={80} startY={142} endX={100} endY={30} duration={2.6} />
+              <MicroParticle delay={2.8} startX={120} startY={142} endX={100} endY={20} duration={2.3} />
             </svg>
           </div>
 
