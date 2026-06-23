@@ -1,10 +1,320 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Check, X } from 'lucide-react';
 import ShieldCheck from '../ui/icons/shield-check';
 import { Button } from '../ui/Button';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % 5);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + 5) % 5);
+  }, []);
+
+  useEffect(() => {
+    if (isHovered) return;
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isHovered, nextSlide]);
+
+  const renderSlideContent = (slideIndex: number) => {
+    switch (slideIndex) {
+      case 0:
+        return (
+          <motion.div
+            key="slide-bottle"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="relative w-full h-full flex items-center justify-center"
+          >
+            {/* Circular soft halo glow */}
+            <div className="absolute w-[80%] h-[80%] rounded-full bg-gradient-to-tr from-[var(--color-navy)]/25 to-white/30 filter blur-2xl opacity-80 z-0" />
+
+            {/* Floating info badge 1 (Claymorphic) */}
+            <motion.div
+              style={{ translateZ: 60 }}
+              animate={{ y: [0, -6, 0] }}
+              transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+              className="absolute top-[12%] left-[-8%] z-20 clay-card-navy py-3 px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none"
+            >
+              <span className="text-[7px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none">FORMULA TYPE</span>
+              <span className="text-[10px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none">5% WITHANOLIDES</span>
+            </motion.div>
+
+            {/* Floating info badge 2 (Glassmorphic) */}
+            <motion.div
+              style={{ translateZ: 80 }}
+              animate={{ y: [0, 6, 0] }}
+              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+              className="absolute bottom-[18%] right-[-8%] z-20 glass-card-navy py-3 px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none"
+            >
+              <span className="text-[7px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none font-semibold">PURITY GUARANTEE</span>
+              <span className="text-[10px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none font-bold">99.8% BIO-ACTIVE</span>
+            </motion.div>
+
+            {/* Isolated floating bottle image */}
+            <motion.img
+              src="/images/isolated_bottle.png"
+              alt="Vedah Vital Ashwagandha Bottle"
+              className="w-[65%] h-auto object-contain select-none filter drop-shadow-[0_30px_45px_rgba(10,25,47,0.22)] animate-float z-10"
+              draggable="false"
+              style={{ translateZ: 30 }}
+            />
+          </motion.div>
+        );
+      case 1:
+        return (
+          <motion.div
+            key="slide-supplement-facts"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-full flex items-center justify-center p-4"
+          >
+            <div className="w-[85%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-4 flex flex-col items-center justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="w-full flex justify-between items-center px-2 pb-2 border-b border-gray-200">
+                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Supplement Facts</span>
+                <span className="font-sans text-[10px] font-semibold text-gray-500">60 Vegetarian Capsules</span>
+              </div>
+              
+              <div className="flex-1 w-full flex items-center justify-center overflow-hidden my-2.5">
+                <img 
+                  src="/images/supplement_facts.png" 
+                  alt="Supplement Facts Label" 
+                  className="max-w-full max-h-full object-contain rounded-lg filter drop-shadow-md select-none"
+                  draggable="false"
+                />
+              </div>
+              
+              <div className="w-full text-center text-[9px] font-sans text-gray-500 leading-normal px-2">
+                Take 1 capsule daily. Standardized to 5% withanolides for maximum potency.
+              </div>
+            </div>
+          </motion.div>
+        );
+      case 2:
+        return (
+          <motion.div
+            key="slide-ingredients"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-full flex items-center justify-center p-4"
+          >
+            <div className="w-[90%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="pb-2 border-b border-gray-200 text-center">
+                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Active Ingredients</span>
+              </div>
+
+              <div className="flex-1 flex flex-col gap-3.5 my-3">
+                {/* Ashwagandha ingredient */}
+                <div className="flex items-center gap-3 bg-[var(--color-navy)]/5 p-2.5 rounded-2xl border border-[var(--color-navy)]/10">
+                  <img 
+                    src="/images/ashwagandha_plant_root.png" 
+                    alt="Ashwagandha Plant & Root" 
+                    className="w-14 h-14 object-cover rounded-xl border border-white shadow-sm select-none"
+                    draggable="false"
+                  />
+                  <div className="flex-1 flex flex-col text-left">
+                    <span className="font-sans text-xs font-bold text-[var(--color-heading)]">KSM-66® Ashwagandha Root</span>
+                    <span className="font-sans text-[10px] text-[var(--color-text)] font-light leading-snug mt-0.5">
+                      600mg clinical dose. Full-spectrum root extract standardized to 5% withanolides.
+                    </span>
+                  </div>
+                </div>
+
+                {/* Black Pepper ingredient */}
+                <div className="flex items-center gap-3 bg-[var(--color-navy)]/5 p-2.5 rounded-2xl border border-[var(--color-navy)]/10">
+                  <img 
+                    src="/images/black_peppercorns.png" 
+                    alt="Black Peppercorns" 
+                    className="w-14 h-14 object-cover rounded-xl border border-white shadow-sm select-none"
+                    draggable="false"
+                  />
+                  <div className="flex-1 flex flex-col text-left">
+                    <span className="font-sans text-xs font-bold text-[var(--color-heading)]">Black Pepper Extract (Piperine)</span>
+                    <span className="font-sans text-[10px] text-[var(--color-text)] font-light leading-snug mt-0.5">
+                      5mg enhancement dose. Boosts absorption of active withanolides for maximum bioavailability.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center text-[9px] font-sans text-gray-500">
+                100% natural, vegetarian capsules with zero synthetic fillers or binders.
+              </div>
+            </div>
+          </motion.div>
+        );
+      case 3:
+        return (
+          <motion.div
+            key="slide-comparison"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-full flex items-center justify-center p-4"
+          >
+            <div className="w-[90%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="pb-2 border-b border-gray-200 text-center">
+                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Why KSM-66® Ashwagandha?</span>
+              </div>
+
+              <div className="flex-1 flex flex-col justify-center gap-2 my-2 text-left">
+                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans font-bold border-b border-gray-100 pb-1 text-gray-400">
+                  <div className="col-span-5">Feature</div>
+                  <div className="col-span-4 text-[var(--color-navy)]">KSM-66®</div>
+                  <div className="col-span-3">Standard</div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                  <div className="col-span-5 font-medium text-gray-600">Source</div>
+                  <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
+                    <Check className="w-3 h-3 stroke-[3]" /> Roots Only
+                  </div>
+                  <div className="col-span-3 text-red-500 flex items-center gap-1">
+                    <X className="w-3 h-3" /> Leaf Waste
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                  <div className="col-span-5 font-medium text-gray-600">Standardization</div>
+                  <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
+                    <Check className="w-3 h-3 stroke-[3]" /> 5% Active
+                  </div>
+                  <div className="col-span-3 text-red-500 flex items-center gap-1">
+                    <X className="w-3 h-3" /> Unspecified
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                  <div className="col-span-5 font-medium text-gray-600">Extraction</div>
+                  <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
+                    <Check className="w-3 h-3 stroke-[3]" /> Green (Water)
+                  </div>
+                  <div className="col-span-3 text-red-500 flex items-center gap-1">
+                    <X className="w-3 h-3" /> Solvents
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-12 gap-1 text-[10px] font-sans border-b border-gray-50 py-1.5 items-center">
+                  <div className="col-span-5 font-medium text-gray-600">Clinical Proof</div>
+                  <div className="col-span-4 font-bold text-emerald-600 flex items-center gap-1">
+                    <Check className="w-3 h-3 stroke-[3]" /> 24+ Trials
+                  </div>
+                  <div className="col-span-3 text-red-500 flex items-center gap-1">
+                    <X className="w-3 h-3" /> None
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center text-[9px] font-sans text-gray-500">
+                KSM-66® is the highest concentration, most bioavailable root extract.
+              </div>
+            </div>
+          </motion.div>
+        );
+      case 4:
+        return (
+          <motion.div
+            key="slide-benefits"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.4 }}
+            className="w-full h-full flex items-center justify-center p-4"
+          >
+            <div className="w-[90%] h-[90%] bg-white/95 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl p-5 flex flex-col justify-between z-10 overflow-hidden text-[var(--color-heading)]">
+              <div className="pb-2 border-b border-gray-200 text-center">
+                <span className="font-sans text-xs font-bold tracking-wider uppercase text-[var(--color-navy)]">Clinically Backed Benefits</span>
+              </div>
+
+              <div className="flex-1 flex flex-col justify-center gap-3.5 my-3 text-left">
+                <div>
+                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                    <span>Stress & Cortisol Reduction</span>
+                    <span className="text-[var(--color-navy)]">-27.9%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 h-1.5 rounded-full mt-1 overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }} 
+                      animate={{ width: "27.9%" }} 
+                      transition={{ duration: 0.8, delay: 0.2 }}
+                      className="bg-[var(--color-navy)] h-full rounded-full" 
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                    <span>Strength & Muscle Recovery</span>
+                    <span className="text-[var(--color-navy)]">+17.8%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 h-1.5 rounded-full mt-1 overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }} 
+                      animate={{ width: "17.8%" }} 
+                      transition={{ duration: 0.8, delay: 0.3 }}
+                      className="bg-[var(--color-navy)] h-full rounded-full" 
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                    <span>Cognitive Focus & Memory</span>
+                    <span className="text-[var(--color-navy)]">+13.5%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 h-1.5 rounded-full mt-1 overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }} 
+                      animate={{ width: "13.5%" }} 
+                      transition={{ duration: 0.8, delay: 0.4 }}
+                      className="bg-[var(--color-navy)] h-full rounded-full" 
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-center text-[10px] font-sans font-bold text-gray-700">
+                    <span>Restful Sleep Depth</span>
+                    <span className="text-[var(--color-navy)]">+15.2%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 h-1.5 rounded-full mt-1 overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }} 
+                      animate={{ width: "15.2%" }} 
+                      transition={{ duration: 0.8, delay: 0.5 }}
+                      className="bg-[var(--color-navy)] h-full rounded-full" 
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center text-[9px] font-sans text-gray-500">
+                *Based on randomized double-blind placebo-controlled clinical trials.
+              </div>
+            </div>
+          </motion.div>
+        );
+      default:
+        return null;
+    }
+  };
 
   // Parallax scrolling layers
   const { scrollY } = useScroll();
@@ -130,52 +440,60 @@ export const Hero: React.FC = () => {
 
         </div>
 
-        {/* RIGHT COLUMN: Layered Floating Bottle (in front of text) */}
-        <div className="order-1 lg:order-2 lg:col-span-6 flex justify-center lg:justify-end items-center relative py-8 lg:py-0 z-10">
-          
-          <motion.div
-            style={{ y: yBottle, rotateX, rotateY, transformStyle: "preserve-3d" }}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="relative w-[360px] md:w-[500px] aspect-square flex items-center justify-center overflow-visible"
-          >
-            {/* Circular soft halo glow - darkened/more visible */}
-            <div className="absolute w-[80%] h-[80%] rounded-full bg-gradient-to-tr from-[var(--color-navy)]/25 to-white/30 filter blur-2xl opacity-80 z-0" />
-
-            {/* Floating info badge 1 (Claymorphic) */}
+        {/* RIGHT COLUMN: Interactive Product Carousel */}
+        <div 
+          className="group order-1 lg:order-2 lg:col-span-6 flex justify-center lg:justify-end items-center relative py-8 lg:py-0 z-10"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="relative w-[360px] md:w-[500px] aspect-square flex items-center justify-center overflow-visible">
+            
+            {/* 3D Tilt Container for Slide Content */}
             <motion.div
-              style={{ translateZ: 60 }}
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-              className="absolute top-[12%] left-[-8%] z-20 clay-card-navy py-3 px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none"
+              style={{ y: yBottle, rotateX, rotateY, transformStyle: "preserve-3d" }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.9, ease: "easeOut" }}
+              className="relative w-full h-full flex items-center justify-center overflow-visible"
             >
-              <span className="text-[7px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none">FORMULA TYPE</span>
-              <span className="text-[10px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none">5% WITHANOLIDES</span>
+              <AnimatePresence mode="wait">
+                {renderSlideContent(currentSlide)}
+              </AnimatePresence>
             </motion.div>
 
-            {/* Floating info badge 2 (Glassmorphic) */}
-            <motion.div
-              style={{ translateZ: 80 }}
-              animate={{ y: [0, 6, 0] }}
-              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
-              className="absolute bottom-[18%] right-[-8%] z-20 glass-card-navy py-3 px-4.5 flex flex-col items-start gap-0.5 pointer-events-none select-none"
+            {/* Carousel Controls (Chevron Navigation) - Visible on Hover */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 md:left-4 w-9 h-9 rounded-full bg-white/40 backdrop-blur-md border border-white/30 text-[var(--color-navy)] hover:text-white flex items-center justify-center hover:bg-[var(--color-navy)] transition-all duration-300 z-30 opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+              aria-label="Previous Slide"
             >
-              <span className="text-[7px] font-sans font-bold tracking-[0.15em] text-[var(--color-navy)] uppercase leading-none font-semibold">PURITY GUARANTEE</span>
-              <span className="text-[10px] font-sans font-bold text-[var(--color-heading)] uppercase leading-none font-bold">99.8% BIO-ACTIVE</span>
-            </motion.div>
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 md:right-4 w-9 h-9 rounded-full bg-white/40 backdrop-blur-md border border-white/30 text-[var(--color-navy)] hover:text-white flex items-center justify-center hover:bg-[var(--color-navy)] transition-all duration-300 z-30 opacity-0 group-hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer focus:outline-none"
+              aria-label="Next Slide"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
 
-            {/* Isolated floating bottle image - size decreased to 65% */}
-            <motion.img
-              src="/images/isolated_bottle.png"
-              alt="Vedah Vital Ashwagandha Bottle"
-              className="w-[65%] h-auto object-contain select-none filter drop-shadow-[0_30px_45px_rgba(10, 25, 47,0.22)] animate-float z-10"
-              draggable="false"
-              style={{ translateZ: 30 }}
-            />
+            {/* Pagination Indicators (Dots) */}
+            <div className="flex justify-center gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 z-30 bg-white/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/30 shadow-md">
+              {[0, 1, 2, 3, 4].map((index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer focus:outline-none ${
+                    currentSlide === index 
+                      ? 'bg-[var(--color-navy)] w-5' 
+                      : 'bg-[var(--color-navy)]/35 hover:bg-[var(--color-navy)]/65 w-2'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
 
-                      </motion.div>
-
+          </div>
         </div>
 
       </div>
