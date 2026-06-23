@@ -9,7 +9,6 @@ import { PurityStandards } from '../components/sections/PurityStandards';
 import { HowItWorks } from '../components/sections/HowItWorks';
 import { PillJourney } from '../components/sections/PillJourney';
 import { StatsCounter } from '../components/sections/StatsCounter';
-import { TheDifference } from '../components/sections/TheDifference';
 import { Heritage } from '../components/sections/Heritage';
 import { FAQ } from '../components/sections/FAQ';
 import { Testimonials } from '../components/sections/Testimonials';
@@ -41,7 +40,6 @@ export const Home: React.FC = () => {
         <HowItWorks />
         <div className="optimize-render"><PillJourney /></div>
         <div className="optimize-render"><StatsCounter /></div>
-        <div className="optimize-render"><TheDifference /></div>
         <div className="optimize-render"><Heritage /></div>
         <div className="optimize-render"><FAQ /></div>
         <div className="optimize-render"><Testimonials /></div>
