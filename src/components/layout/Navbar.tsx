@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
           {/* Logo (Vedah Vital style from client image) */}
           <Link to="/" className="flex items-center focus:outline-none">
             <img
-              src="/image/logo3.svg"
+              src="/images/logo4.svg"
               alt="Vedah Vital Logo"
               className="h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105"
             />
