@@ -9,31 +9,62 @@ export const PurityStandards: React.FC = () => {
       title: "USDA Organic",
       description: "100% certified organic cultivation. Grown without toxic chemical pesticides, synthetic weed-killers, or artificial growth regulators. Standardized to preserve maximum botanical purity.",
       illustration: () => (
-        <svg viewBox="0 0 50 50" className="w-14 h-14 text-[var(--color-navy)]" fill="none">
-          <circle cx="25" cy="25" r="23" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" fill="none" className="opacity-40" />
+        <svg viewBox="0 0 100 100" className="w-20 h-20 text-[var(--color-navy)]" fill="none">
+          <defs>
+            <linearGradient id="sunGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#FFE296" />
+              <stop offset="100%" stopColor="#F5B041" stopOpacity="0" />
+            </linearGradient>
+            <linearGradient id="organicLeaf" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#8FB3FF" />
+              <stop offset="100%" stopColor="#1B365D" />
+            </linearGradient>
+          </defs>
+          
+          {/* Sun Rays Background */}
+          <circle cx="50" cy="40" r="25" fill="url(#sunGrad)" opacity="0.3" />
+          
+          {/* Soil base */}
+          <path d="M25,75 C35,72 65,72 75,75 L75,80 C65,80 35,80 25,80 Z" fill="currentColor" opacity="0.15" />
+          
+          {/* Double concentric borders with dots */}
+          <circle cx="50" cy="50" r="44" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 3" opacity="0.4" />
+          <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+          
+          {/* Growing sprout shoot */}
           <motion.path
-            d="M25,35 C17,35 15,25 25,12 C35,25 33,35 25,35 Z"
-            fill="currentColor"
-            opacity="0.1"
-          />
-          <motion.path
-            d="M25,35 C17,35 15,25 25,12 C35,25 33,35 25,35 Z"
+            d="M50,75 L50,45"
             stroke="currentColor"
-            strokeWidth="1.8"
+            strokeWidth="2.5"
             strokeLinecap="round"
-            strokeLinejoin="round"
-            animate={{ scale: [1, 1.05, 1] }}
+          />
+          
+          {/* Left leaf */}
+          <motion.path
+            d="M50,58 C38,55 32,44 34,44 C34,44 42,42 50,52"
+            fill="url(#organicLeaf)"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            animate={{ rotate: [-2, 2, -2] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="origin-[50px_58px]"
           />
-          <path d="M25,15 C20,22 20,30 25,34" stroke="currentColor" strokeWidth="1.0" strokeLinecap="round" />
+          
+          {/* Right leaf */}
           <motion.path
-            d="M25,22 C28,21 30,22 31,24"
+            d="M50,50 C62,47 68,36 66,36 C66,36 58,34 50,44"
+            fill="url(#organicLeaf)"
             stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            animate={{ strokeDashoffset: [10, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            strokeWidth="1.5"
+            animate={{ rotate: [2, -2, 2] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="origin-[50px_50px]"
           />
+
+          {/* Golden floating pollen */}
+          <motion.circle cx="34" cy="38" r="1.5" fill="#FFE296" animate={{ y: [0, -8], opacity: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity }} />
+          <motion.circle cx="66" cy="30" r="1.5" fill="#FFE296" animate={{ y: [0, -6], opacity: [0, 1, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: 0.5 }} />
+          <motion.circle cx="50" cy="28" r="2" fill="#FFF" animate={{ y: [0, -10], opacity: [0, 1, 0] }} transition={{ duration: 2.2, repeat: Infinity, delay: 0.9 }} />
         </svg>
       )
     },
@@ -41,27 +72,73 @@ export const PurityStandards: React.FC = () => {
       title: "cGMP Facility",
       description: "Manufactured in a certified cGMP (current Good Manufacturing Practices) facility. Rigorous production control ensures every stage of batching meets FDA sanitation and quality benchmarks.",
       illustration: () => (
-        <svg viewBox="0 0 50 50" className="w-14 h-14 text-[var(--color-navy)]" fill="none">
-          <circle cx="25" cy="25" r="23" stroke="currentColor" strokeWidth="1" fill="none" className="opacity-30" />
-          <motion.path
-            d="M25,8 L12,13 L12,25 C12,35 25,42 25,42 C25,42 38,35 38,25 L38,13 Z"
-            stroke="currentColor"
+        <svg viewBox="0 0 100 100" className="w-20 h-20 text-[var(--color-navy)]" fill="none">
+          <defs>
+            <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#8FB3FF" />
+              <stop offset="100%" stopColor="#1B365D" />
+            </linearGradient>
+          </defs>
+
+          {/* Cleanroom background panel */}
+          <rect x="20" y="25" width="60" height="50" rx="8" stroke="currentColor" strokeWidth="1.5" strokeDasharray="5 2" opacity="0.3" />
+          
+          {/* Sterilization air filters lines */}
+          <line x1="28" y1="32" x2="72" y2="32" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+          <line x1="28" y1="36" x2="72" y2="36" stroke="currentColor" strokeWidth="1" opacity="0.2" />
+
+          {/* Distillation container */}
+          <rect x="28" y="45" width="16" height="24" rx="4" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M36,45 L36,35 L48,35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          
+          {/* Liquid filling animation */}
+          <motion.rect
+            x="30"
+            y="55"
+            width="12"
+            height="12"
+            rx="2"
+            fill="#8FB3FF"
+            opacity="0.3"
+            animate={{ height: [4, 12, 4], y: [63, 55, 63] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+
+          {/* Gauge Dial */}
+          <circle cx="58" cy="45" r="10" stroke="currentColor" strokeWidth="1.5" />
+          <circle cx="58" cy="45" r="2" fill="currentColor" />
+          <motion.line
+            x1="58"
+            y1="45"
+            x2="58"
+            y2="39"
+            stroke="#FFE296"
             strokeWidth="1.8"
-            strokeLinejoin="round"
-            fill="currentColor"
-            opacity="0.08"
-            animate={{ scale: [1, 1.03, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <motion.path
-            d="M18,24 L23,29 L32,18"
-            stroke="currentColor"
-            strokeWidth="2.2"
             strokeLinecap="round"
-            strokeLinejoin="round"
-            animate={{ pathLength: [0, 1, 1] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }}
+            animate={{ rotate: [-40, 60, -40] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="origin-[58px_45px]"
           />
+
+          {/* Sterile check shield overlay */}
+          <motion.g
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <path
+              d="M72,50 L60,54 L60,63 C60,70 72,75 72,75 C72,75 84,70 84,63 L84,54 Z"
+              fill="url(#shieldGrad)"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M66,62 L70,66 L78,58"
+              stroke="#FFF"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </motion.g>
         </svg>
       )
     },
@@ -69,20 +146,59 @@ export const PurityStandards: React.FC = () => {
       title: "Lab Tested",
       description: "Independently verified by third-party laboratories. Every batch undergoes gas chromatography and HPLC tests to screen for heavy metals, yeast, mold, and confirm active potency.",
       illustration: () => (
-        <svg viewBox="0 0 50 50" className="w-14 h-14 text-[var(--color-navy)]" fill="none">
-          <circle cx="25" cy="25" r="23" stroke="currentColor" strokeWidth="1" strokeDasharray="4 2" fill="none" className="opacity-40" />
+        <svg viewBox="0 0 100 100" className="w-20 h-20 text-[var(--color-navy)]" fill="none">
+          <defs>
+            <linearGradient id="molGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#FFE296" />
+              <stop offset="100%" stopColor="#8FB3FF" />
+            </linearGradient>
+          </defs>
+
+          {/* Hexagonal molecular bond (Benzene structure of Withanolide) */}
           <motion.g
-            animate={{ y: [0, -2, 0] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ rotate: 360 }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="origin-[50px_45px]"
           >
-            <rect x="12" y="32" width="26" height="4" rx="1" fill="currentColor" opacity="0.3" />
-            <rect x="16" y="14" width="6" height="18" rx="3" stroke="currentColor" strokeWidth="1.8" />
-            <line x1="16" y1="20" x2="22" y2="20" stroke="currentColor" strokeWidth="1" />
-            <rect x="28" y="10" width="6" height="22" rx="3" stroke="currentColor" strokeWidth="1.8" />
-            <line x1="28" y1="18" x2="34" y2="18" stroke="currentColor" strokeWidth="1" />
+            {/* Hexagon bonds */}
+            <polygon points="50,22 70,33 70,57 50,68 30,57 30,33" stroke="url(#molGrad)" strokeWidth="2" strokeLinejoin="round" />
+            
+            {/* Inner double bonds */}
+            <line x1="66" y1="36" x2="66" y2="54" stroke="url(#molGrad)" strokeWidth="1.2" opacity="0.6" />
+            <line x1="34" y1="54" x2="48" y2="62" stroke="url(#molGrad)" strokeWidth="1.2" opacity="0.6" />
+            <line x1="48" y1="28" x2="34" y2="36" stroke="url(#molGrad)" strokeWidth="1.2" opacity="0.6" />
+
+            {/* Atoms (spheres) */}
+            <circle cx="50" cy="22" r="3.5" fill="#FFE296" stroke="currentColor" strokeWidth="1" />
+            <circle cx="70" cy="33" r="3.5" fill="#8FB3FF" stroke="currentColor" strokeWidth="1" />
+            <circle cx="70" cy="57" r="3.5" fill="#FFF" stroke="currentColor" strokeWidth="1" />
+            <circle cx="50" cy="68" r="3.5" fill="#FFE296" stroke="currentColor" strokeWidth="1" />
+            <circle cx="30" cy="57" r="3.5" fill="#8FB3FF" stroke="currentColor" strokeWidth="1" />
+            <circle cx="30" cy="33" r="3.5" fill="#FFF" stroke="currentColor" strokeWidth="1" />
           </motion.g>
-          <motion.circle cx="20" cy="12" r="1.5" fill="currentColor" animate={{ y: [0, -6], opacity: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity }} />
-          <motion.circle cx="31" cy="7" r="1.2" fill="currentColor" animate={{ y: [0, -5], opacity: [0, 1, 0] }} transition={{ duration: 1.8, repeat: Infinity, delay: 0.4 }} />
+
+          {/* Magnifying Glass scanning the molecule */}
+          <motion.g
+            animate={{ x: [-10, 10, -10], y: [-4, 4, -4] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <circle cx="45" cy="40" r="13" stroke="currentColor" strokeWidth="2.2" fill="rgba(255,255,255,0.45)" />
+            <line x1="54" y1="49" x2="66" y2="61" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            <path d="M38,35 A9,9 0 0,1 47,32" stroke="#FFF" strokeWidth="1.2" strokeLinecap="round" />
+          </motion.g>
+
+          {/* Scientific analysis laser line */}
+          <motion.line
+            x1="15"
+            y1="82"
+            x2="85"
+            y2="82"
+            stroke="#8FB3FF"
+            strokeWidth="1.5"
+            strokeDasharray="4 2"
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          />
         </svg>
       )
     }
@@ -141,11 +257,17 @@ export const PurityStandards: React.FC = () => {
                 <AnimatedSection
                   key={g.title}
                   delay={idx * 0.15}
-                  className="flex flex-col items-start gap-4 p-6 rounded-3xl border border-[rgba(10,25,47,0.12)] bg-white/50 backdrop-blur-md shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-white/70 transition-all duration-300 group text-left"
+                  className="flex flex-col items-stretch p-6 rounded-3xl border border-[rgba(10,25,47,0.12)] bg-white/50 backdrop-blur-md shadow-sm hover:shadow-md hover:scale-[1.02] hover:bg-white/70 transition-all duration-300 group text-left"
                 >
-                  <div className="w-14 h-14 flex items-center justify-center rounded-xl bg-[var(--color-navy-light)] text-[var(--color-navy)] shadow-inner transition-transform duration-300 group-hover:scale-105">
+                  {/* Top Illustration Wrapper (Fills top of the card) */}
+                  <div className="h-36 w-full flex items-center justify-center bg-[var(--color-navy-light)] rounded-2xl shadow-inner mb-5 relative overflow-hidden">
+                    {/* Floating background graphic aura */}
+                    <div className="absolute w-24 h-24 rounded-full bg-white opacity-25 blur-xl pointer-events-none" />
+                    
                     <Illustration />
                   </div>
+
+                  {/* Card Info */}
                   <div className="flex flex-col gap-2">
                     <h4 className="font-sans text-base font-bold uppercase tracking-wider text-[var(--color-heading)]">
                       {g.title}
