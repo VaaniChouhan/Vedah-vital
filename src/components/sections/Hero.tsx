@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
       {/* Main Grid Content */}
       <div className="w-full max-w-[var(--max-width)] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
         
-        <div className="lg:col-span-6 flex flex-col items-start gap-4.5 text-left py-5 md:py-6.5 px-6 md:px-8 rounded-3xl liquid-glass-card max-w-xl">
+        <div className="order-2 lg:order-1 lg:col-span-6 flex flex-col items-start gap-4.5 text-left py-5 md:py-6.5 px-6 md:px-8 rounded-3xl liquid-glass-card max-w-xl">
           
           <motion.div
             initial={{ opacity: 0, x: -10 }}
@@ -163,7 +163,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* RIGHT COLUMN: Layered Floating Bottle (in front of text) */}
-        <div className="lg:col-span-6 flex justify-center lg:justify-end items-center relative py-8 lg:py-0 z-10">
+        <div className="order-1 lg:order-2 lg:col-span-6 flex justify-center lg:justify-end items-center relative py-8 lg:py-0 z-10">
           
           <motion.div
             style={{ y: yBottle, rotateX, rotateY, transformStyle: "preserve-3d" }}
