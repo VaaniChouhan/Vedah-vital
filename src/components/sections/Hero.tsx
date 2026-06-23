@@ -106,11 +106,11 @@ export const Hero: React.FC = () => {
                 <span className="font-sans text-[12.5px] sm:text-sm md:text-base font-bold tracking-wider uppercase text-[var(--color-navy)]">Active Ingredients</span>
               </div>
 
-              {/* Side-by-side ingredient cards */}
-              <div className="flex-1 grid grid-cols-2 gap-2 sm:gap-3.5 my-1.5 sm:my-3">
+              {/* Side-by-side ingredient cards on desktop, stacked on mobile */}
+              <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2.5 md:gap-3.5 my-1.5 sm:my-3">
                 {/* Ashwagandha Card */}
-                <div className="flex flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 sm:p-3 text-left justify-between">
-                  <div className="w-full aspect-[1.15/1] rounded-xl overflow-hidden shadow-inner border border-white bg-white">
+                <div className="flex flex-row md:flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 sm:p-3 text-left justify-between items-center md:items-stretch">
+                  <div className="w-20 h-20 min-[380px]:w-24 min-[380px]:h-24 sm:w-28 sm:h-28 md:w-full md:h-auto md:aspect-[1.15/1] rounded-xl overflow-hidden shadow-inner border border-white bg-white shrink-0">
                     <img 
                       src="/images/ashwagandha_plant_root.png" 
                       alt="Ashwagandha Plant & Root" 
@@ -118,11 +118,11 @@ export const Hero: React.FC = () => {
                       draggable="false"
                     />
                   </div>
-                  <div className="flex flex-col mt-2 flex-1 justify-between">
+                  <div className="flex flex-col flex-1 justify-center ml-3.5 md:ml-0 md:mt-2">
                     <div>
                       <span className="font-sans text-[12px] sm:text-[13px] md:text-sm font-bold text-[var(--color-heading)] leading-tight block">KSM-66® Ashwagandha</span>
                       <span className="font-sans text-[9.5px] sm:text-[10.5px] md:text-[11px] text-[var(--color-navy)] font-bold tracking-wider uppercase mt-0.5 block">600mg Dose</span>
-                      <p className="font-sans text-[10.5px] sm:text-[11.5px] md:text-[12px] text-[var(--color-text)] font-light leading-snug mt-1">
+                      <p className="font-sans text-[10px] min-[380px]:text-[10.5px] sm:text-[11.5px] md:text-[12px] text-[var(--color-text)] font-light leading-snug mt-1">
                         Clinically proven KSM-66® root extract, standardized to 5% active withanolides. Supports cortisol balance, cognitive focus, and muscle recovery.
                       </p>
                     </div>
@@ -130,8 +130,8 @@ export const Hero: React.FC = () => {
                 </div>
 
                 {/* Black Pepper Card */}
-                <div className="flex flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 sm:p-3 text-left justify-between">
-                  <div className="w-full aspect-[1.15/1] rounded-xl overflow-hidden shadow-inner border border-white bg-white">
+                <div className="flex flex-row md:flex-col bg-[var(--color-navy)]/5 rounded-2xl border border-[var(--color-navy)]/10 overflow-hidden shadow-sm p-2 sm:p-3 text-left justify-between items-center md:items-stretch">
+                  <div className="w-20 h-20 min-[380px]:w-24 min-[380px]:h-24 sm:w-28 sm:h-28 md:w-full md:h-auto md:aspect-[1.15/1] rounded-xl overflow-hidden shadow-inner border border-white bg-white shrink-0">
                     <img 
                       src="/images/black_peppercorns.png" 
                       alt="Black Peppercorns" 
@@ -139,11 +139,11 @@ export const Hero: React.FC = () => {
                       draggable="false"
                     />
                   </div>
-                  <div className="flex flex-col mt-2 flex-1 justify-between">
+                  <div className="flex flex-col flex-1 justify-center ml-3.5 md:ml-0 md:mt-2">
                     <div>
                       <span className="font-sans text-[12px] sm:text-[13px] md:text-sm font-bold text-[var(--color-heading)] leading-tight block">Black Pepper Extract</span>
                       <span className="font-sans text-[9.5px] sm:text-[10.5px] md:text-[11px] text-[var(--color-navy)] font-bold tracking-wider uppercase mt-0.5 block">5mg Dose</span>
-                      <p className="font-sans text-[10.5px] sm:text-[11.5px] md:text-[12px] text-[var(--color-text)] font-light leading-snug mt-1">
+                      <p className="font-sans text-[10px] min-[380px]:text-[10.5px] sm:text-[11.5px] md:text-[12px] text-[var(--color-text)] font-light leading-snug mt-1">
                         Premium Bio-enhancing Piperine extract. Maximizes bioavailability, ensuring optimal absorption of actives in every capsule.
                       </p>
                     </div>
@@ -451,7 +451,7 @@ export const Hero: React.FC = () => {
             </button>
 
             {/* Pagination Indicators (Dots) */}
-            <div className="flex justify-center gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 z-30 bg-white/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/30 shadow-md">
+            <div className="flex justify-center gap-2 absolute bottom-[-20px] md:bottom-[-25px] left-1/2 -translate-x-1/2 z-30 bg-white/55 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/30 shadow-md">
               {[0, 1, 2, 3, 4].map((index) => (
                 <button
                   key={index}
